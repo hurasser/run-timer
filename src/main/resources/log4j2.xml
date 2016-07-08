@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://logging.apache.org/log4j/2.x/manual/configuration.html#XML
+Quote: Log4j can be configured using two XML flavors; concise and strict. The concise format makes configuration very easy as the element names match the components they represent however it cannot be validated with an XML schema.
+We use the consice non-validatable method -->
+<!-- monitorInterval is in seconds and makes log4j check for updates to this file -->
+<Configuration name="OTT" status="DEBUG" strict="false"> <!-- monitorInterval="30" We got some strange behaviour. Trace going to all files, rolled logs incorrect month name -->
+    <Properties>
+        <!-- Use explicit logs dir because logs moved around a lot -->
+        <Property name="logDir">@LOG_PATH_TOKEN@</Property>
+        <Property name="version">@VERSION_TOKEN@</Property>
+        <!-- Pattern format: https://logging.apache.org/log4j/2.x/manual/layouts.html
+            %C Class name with package
+            %C{1} Class name
+            %M Method-->
+        <Property name="commonPattern">%d ${version} %p [%t] %C{1}:%L %m %ex%n</Property>
+    </Properties>
+    <!--<Filter level="trace" type="ThresholdFilter"/>-->
+
+    <!-- Documentation Log4j2
+            pattern format https://logging.apache.org/log4j/2.x/manual/layouts.html
+            Appenders https://logging.apache.org/log4j/2.x/manual/appenders.html
+    -->
+    <Appenders>
+        <!--<Appenders>
+            <Socket name="Socket" host="localhost" port="9500">
+                <SerializedLayout/>
+            </Socket>
+        </Appenders>-->
+        <ConsoleAppender name="STDOUT">
+            <PatternLayout pattern="${commonPattern}"/>
+            <Filters>
+                <Filter marker="FLOW" onMatch="DENY" onMismatch="NEUTRAL" type="MarkerFilter"/>
+                <Filter marker="EXCEPTION" onMatch="DENY" onMismatch="ACCEPT" type="MarkerFilter"/>
+            </Filters>
+        </ConsoleAppender>
+        <RollingFile name="MainErrorFile" fileName="${logDir}/main-error.log"
+                     filePattern="${logDir}/$${date:yyyy-MM}/main-error-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${commonPattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+                <DefaultRolloverStrategy max="10"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="MainWarnFile" fileName="${logDir}/main-warn.log"
+                     filePattern="${logDir}/$${date:yyyy-MM}/main-warn-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${commonPattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+                <DefaultRolloverStrategy max="10"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="MainInfoFile" fileName="${logDir}/main-info.log"
+                     filePattern="${logDir}/$${date:yyyy-MM}/main-info-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${commonPattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+                <DefaultRolloverStrategy max="10"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="MainDebugFile" fileName="${logDir}/main-debug.log"
+                     filePattern="${logDir}/$${date:yyyy-MM}/main-debug-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${commonPattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy interval="7"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+                <DefaultRolloverStrategy max="10"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="MainTraceFile" fileName="${logDir}/main-trace.log"
+                     filePattern="${logDir}/$${date:yyyy-MM}/main-trace-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${commonPattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+                <DefaultRolloverStrategy max="10"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- additivity="false" means don't propagate logs to parent-->
+
+        <!-- Root logger is parent to all loggers. Root logger level sets default loglevel for loggers which add to root-logger.
+        If specific logger has additivity=false they will not append to root logger.
+        If specific logger has different log-level it will overwrite the level set on root-logger. Therefore we use filter to avoid those -->
+        <Root level="trace">
+            <!--<AppenderRef ref="Socket"/>-->
+            <AppenderRef ref="MainErrorFile">
+                <ThresholdFilter level="ERROR" />
+            </AppenderRef>
+            <AppenderRef ref="MainWarnFile">
+                <ThresholdFilter level="WARN" />
+            </AppenderRef>
+            <AppenderRef ref="MainInfoFile">
+                <ThresholdFilter level="INFO" />
+            </AppenderRef>
+            <AppenderRef ref="MainDebugFile">
+                <ThresholdFilter level="DEBUG" />
+            </AppenderRef>
+            <AppenderRef ref="MainTraceFile">
+                <ThresholdFilter level="TRACE" />
+            </AppenderRef>
+
+            <AppenderRef ref="STDOUT">
+                <ThresholdFilter level="WARN" />
+            </AppenderRef>
+        </Root>
+    </Loggers>
+
+</Configuration>

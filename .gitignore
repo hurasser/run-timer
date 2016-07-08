@@ -1,0 +1,10 @@
+build
+node_modules
+out
+src/main/webapp/components
+.idea/libraries
+workspace.xml
+tasks.xml
+
+
+
