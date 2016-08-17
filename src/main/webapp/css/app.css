@@ -1,3 +1,662 @@
-div {
-  display: block;
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v15/Pru33qjShpZSmG3z6VYwnaCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url(https://fonts.gstatic.com/s/roboto/v15/oOeFwZNlrTefzLYmlVV1UKCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
+}
+
+body {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto;
+  font-weight: 300;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  box-sizing: border-box;
+}
+#main-app {
+  background-color: white;
+}
+#main-content {
+  position: absolute;
+  top: 140px;
+  bottom: 0;
+  left: 8px;
+  right: 0;
+}
+input {
+  outline: none;
+  box-shadow: none;
+  border: 1px solid #000000;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.section-title {
+  text-align: center;
+  font-size: 16pt;
+}
+#page-title-wrapper {
+  text-align: center;
+  overflow: hidden;
+}
+#page-title-wrapper .page-title {
+  margin-top: 10px;
+  font-size: 40px;
+  height: 45px;
+  line-height: 45px;
+  font-weight: 500;
+  color: #008000;
+}
+#page-title-wrapper .page-title .club-logo {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 0 40px;
+  background: url("../images/aaif.png") no-repeat 50% 50%;
+  background-size: contain;
+}
+#time-status-wrapper {
+  text-align: center;
+  overflow: hidden;
+}
+#time-status-wrapper .time-status {
+  margin-top: -20px;
+  font-size: 80px;
+}
+.sidebar-gradient {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 8px;
+  z-index: 2000;
+}
+.sidebar-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 66px;
+  width: 100%;
+  background-color: #008000;
+}
+.sidebar-main {
+  position: absolute;
+  top: 66px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #008000;
+  background: -webkit-gradient(linear, left top, left bottom, from(#008000), to(#55D555));
+  background: -webkit-linear-gradient(top, #008000, #55D555);
+  background: -moz-linear-gradient(top, #008000, #55D555);
+  background: -ms-linear-gradient(top, #008000, #55D555);
+  background: -o-linear-gradient(top, #008000, #55D555);
+}
+#context-menu-button {
+  width: 46px;
+  height: 46px;
+  line-height: 46px;
+  font-size: 20px;
+  -webkit-border-radius: 23px;
+  -moz-border-radius: 23px;
+  border-radius: 23px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: none;
+  background-color: #008000;
+  position: absolute;
+  top: 10px;
+  left: -15px;
+  z-index: 4242;
+}
+#context-menu-button .glyphicon {
+  line-height: 46px;
+  color: white;
+}
+.button {
+  display: inline-block;
+  font-weight: 500;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+#check-in-container {
+  text-align: center;
+  position: relative;
+  height: 99%;
+  width: 100%;
+}
+#check-in-container #check-in-input-wrapper {
+  display: inline-block;
+  height: 100%;
+  width: 250px;
+  position: relative;
+}
+#check-in-container #check-in-input-wrapper #check-in-input {
+  height: 120px;
+  width: 230px;
+  font-size: 90px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  padding-left: 20px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+
+#context-menu .title {
+  color: white;
+  margin: 20px 0 0 15px;
+  font-size: 16px;
+}
+#context-menu .context-menu-item {
+  margin: 10px 0 0 15px;
+  cursor: pointer;
+  color: white;
+}
+#context-menu .context-menu-item .glyphicon,
+#context-menu .context-menu-item .bnrglyph {
+  margin-right: 3px;
+}
+#context-menu .context-menu-item.active {
+  color: white;
+}
+#context-menu .context-menu-divider {
+  margin: 15px 0;
+  border-bottom: 1px solid white;
+}
+
+.form-text-input-wrapper {
+  border: 1px solid #000000;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  height: 100%;
+  width: 100%;
+  padding: 1px 8px;
+  cursor: text;
+  position: relative;
+}
+.form-text-input-wrapper .form-text-input-error {
+  position: absolute;
+  left: 100%;
+  top: 16px;
+  padding-left: 15px;
+}
+.form-text-input-wrapper .input-label {
+  font-size: 12px;
+  color: #949494;
+}
+.form-text-input-wrapper .input-wrapper {
+  margin: auto 0;
+}
+.form-text-input-wrapper .input-wrapper input {
+  height: 50px;
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 18px;
+}
+.form-text-input-wrapper .input-wrapper input.has-placeholder {
+  height: 28px;
+  margin: 0;
+}
+
+#app .ngdialog.ngdialog-theme-default .ngdialog-content {
+  width: 580px;
+  padding: 20px;
+}
+#app .dialog-title {
+  font-size: 24pt;
+  font-weight: 500;
+  padding: 20px 0;
+}
+#app .dialog-input-row {
+  height: 56px;
+  margin: 10px 25px;
+  position: relative;
+}
+#app .dialog-input {
+  text-align: left;
+  height: 56px;
+  display: inline-block;
+  width: 450px;
+}
+#app .dialog-input.small {
+  width: 238px;
+}
+#app .radio-image {
+  display: inline-block;
+  height: 56px;
+  width: 56px;
+}
+#app .dialog-radio-input {
+  display: inline-block;
+  margin-left: 40px;
+}
+#app .dialog-radio-input label {
+  margin-right: 20px;
+  line-height: 56px;
+}
+#app .dialog-radio-input label:last-child {
+  margin-right: 0;
+}
+#app #add-runner-wrapper {
+  width: 540px;
+  height: 420px;
+  background-color: white;
+  text-align: center;
+  margin: 0;
+}
+#app #add-runner-wrapper #dialog-control-buttons .dialog-button {
+  display: inline-block;
+  color: white;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 12pt;
+  margin: 20px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+#app #add-runner-wrapper #dialog-control-buttons .dialog-button .glyphicon {
+  margin-right: 5px;
+}
+#app #add-runner-wrapper #dialog-control-buttons .dialog-button.add {
+  background-color: #00AC7F;
+}
+#app #add-runner-wrapper #dialog-control-buttons .dialog-button.cancel {
+  background-color: #AC1111;
+}
+#app #add-runner-wrapper .dialog-input-row .dialog-input.age {
+  position: absolute;
+  top: 0;
+  left: 20px;
+}
+#app #add-runner-wrapper .dialog-radio-input {
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+#app #add-runner-wrapper .dialog-radio-input .male {
+  background: url("../images/man.png") no-repeat 50% 50%;
+  background-size: contain;
+}
+#app #add-runner-wrapper .dialog-radio-input .female {
+  background: url("../images/woman.png") no-repeat 50% 50%;
+  background-size: contain;
+}
+
+#home-content {
+  text-align: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#home-content #results-wrapper {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  right: 15px;
+  bottom: 20%;
+}
+#home-content #results-wrapper #category-result-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 70%;
+  text-align: left;
+  color: #444444;
+}
+#home-content #results-wrapper #category-result-wrapper .category-results {
+  height: 49%;
+}
+#home-content #results-wrapper #category-result-wrapper .category-results .category-title {
+  height: 30px;
+  line-height: 30px;
+  font-size: 20px;
+}
+#home-content #results-wrapper #category-result-wrapper .category-results .category-title span {
+  border-bottom: 1px solid #444444;
+}
+#home-content #results-wrapper #category-result-wrapper .category-results .category-row .category-field {
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#home-content #results-wrapper #category-result-wrapper .category-results .category-row .category-field.placement {
+  width: 10%;
+}
+#home-content #results-wrapper #category-result-wrapper .category-results .category-row .category-field.name {
+  width: 70%;
+  text-overflow: ellipsis;
+}
+#home-content #results-wrapper #category-result-wrapper .category-results .category-row .category-field.time {
+  width: 19%;
+}
+#home-content #results-wrapper #result-list-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 70%;
+  right: 0;
+}
+#home-content #results-wrapper #result-list-wrapper .result-list-entry {
+  text-align: left;
+  font-size: 12pt;
+}
+#home-content #results-wrapper #result-list-wrapper .result-list-entry .result-list-field {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#home-content #results-wrapper #result-list-wrapper .result-list-entry .result-list-field.placement {
+  width: 10%;
+}
+#home-content #results-wrapper #result-list-wrapper .result-list-entry .result-list-field.name {
+  width: 71%;
+  text-overflow: ellipsis;
+}
+#home-content #results-wrapper #result-list-wrapper .result-list-entry .result-list-field.time {
+  width: 16%;
+}
+#home-content #results-wrapper #result-list-wrapper .result-list-entry .sponsor-wrapper {
+  height: 80px;
+  text-align: center;
+  position: relative;
+}
+#home-content #results-wrapper #result-list-wrapper .result-list-entry .sponsor-wrapper .sponsor-caption {
+  text-align: left;
+  font-size: 9pt;
+}
+#home-content #results-wrapper #result-list-wrapper .result-list-entry .sponsor-wrapper .sponsor-logo-wrapper {
+  position: absolute;
+  top: 15px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+#home-content #results-wrapper #latest-results-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30%;
+  right: 30%;
+  text-align: left;
+}
+#home-content #results-wrapper #latest-results-wrapper .result-row {
+  height: 30px;
+  font-size: 18px;
+}
+#home-content #results-wrapper #latest-results-wrapper .result-row.header {
+  height: 40px;
+  font-size: 24px;
+}
+#home-content #results-wrapper #latest-results-wrapper .result-row div {
+  display: inline-block;
+}
+#home-content #results-wrapper #latest-results-wrapper .result-number {
+  width: 18%;
+}
+#home-content #results-wrapper #latest-results-wrapper .result-name {
+  width: 64%;
+}
+#home-content #results-wrapper #latest-results-wrapper .result-time {
+  width: 12%;
+}
+#home-content #main-sponsor-wrapper {
+  position: absolute;
+  top: 80%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: left;
+  background: url("../images/main-sponsor.png") no-repeat 50% 50%;
+  background-size: contain;
+}
+#home-content #main-sponsor-wrapper #main-sponsor-text {
+  position: absolute;
+  bottom: 15px;
+  left: 25px;
+  font-size: 14pt;
+}
+
+
+#nav-bar {
+  color: #3498db;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: center;
+}
+#nav-bar .nav-bar-element {
+  display: inline-block;
+  width: 140px;
+  height: 30px;
+  line-height: 30px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #3498db;
+  margin-right: 20px;
+}
+#nav-bar .nav-bar-element:last-child {
+  margin-right: 0;
+}
+
+#runners-content #page-title {
+  text-align: center;
+  font-size: 30pt;
+}
+#runners-content #page-controls {
+  width: 540px;
+  height: 54px;
+  margin: 0 auto;
+  position: relative;
+}
+#runners-content #page-controls .filter-input {
+  display: inline-block;
+  height: 54px;
+  width: 300px;
+}
+#runners-content #page-controls .add-runner-button {
+  position: absolute;
+  top: 7px;
+  right: 0;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  width: 150px;
+  text-align: center;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  color: white;
+  font-size: 12pt;
+  background-color: #00AC7F;
+}
+#runners-content #page-controls .add-runner-button .glyphicon {
+  margin-right: 3px;
+}
+#runners-content #runner-entries-wrapper {
+  position: absolute;
+  top: 145px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+#runners-content #runner-entries-container {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
+}
+#runners-content .runner-entry {
+  width: 540px;
+  margin: 8px auto;
+  text-align: left;
+}
+#runners-content .runner-entry.header {
+  padding-left: 30px;
+}
+#runners-content .runner-entry.header .number {
+  text-align: center;
+}
+#runners-content .runner-entry.header .sort-toggle {
+  display: inline-block;
+  font-size: 10pt;
+}
+#runners-content .runner-entry.header .sort-toggle input[type=checkbox] {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+#runners-content .runner-entry.header .sortable {
+  cursor: pointer;
+}
+#runners-content .runner-entry .runner-entry-button {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background-color: #00AC7F;
+}
+#runners-content .runner-entry .runner-entry-button .glyphicon {
+  color: white;
+}
+#runners-content .runner-entry .runner-entry-field {
+  display: inline-block;
+  height: 30px;
+  font-size: 14pt;
+}
+#runners-content .runner-entry .runner-entry-field.number {
+  width: 50px;
+  text-align: right;
+}
+#runners-content .runner-entry .runner-entry-field.name {
+  width: 350px;
+}
+#runners-content .runner-entry .runner-entry-field.age {
+  width: 50px;
+}
+#runners-content .runner-entry .runner-entry-field.gender {
+  width: 30px;
+}
+#runners-content .runner-entry .runner-entry-field.gender.male {
+  background: url("../images/man.png") no-repeat 50% 50%;
+  background-size: contain;
+}
+#runners-content .runner-entry .runner-entry-field.gender.female {
+  background: url("../images/woman.png") no-repeat 50% 50%;
+  background-size: contain;
+}
+
+#time-content {
+  text-align: center;
+}
+#time-content #start-race-button {
+  display: inline-block;
+  height: 160px;
+  width: 600px;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  border-radius: 60px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 4px solid red;
+  color: red;
+  font-size: 80px;
+  line-height: 160px;
+  margin-top: 20px;
+}
+#time-content .time-button-row {
+  text-align: center;
+  margin: 20px 0;
+}
+#time-content .time-button-row.add .time-button {
+  background-color: #00AC7F;
+}
+#time-content .time-button-row.sub .time-button {
+  background-color: #AC1111;
+}
+#time-content .time-button-row .reset-button {
+  background-color: black;
+  color: white;
+  display: inline-block;
+  width: 460px;
+  height: 120px;
+  font-size: 50px;
+  line-height: 120px;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  border-radius: 40px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+#time-content .time-button-row .time-button {
+  display: inline-block;
+  width: 140px;
+  height: 120px;
+  font-size: 50px;
+  line-height: 120px;
+  color: black;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  border-radius: 40px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  margin-right: 20px;
+}
+#time-content .time-button-row .time-button:last-child {
+  margin-right: 0;
 }

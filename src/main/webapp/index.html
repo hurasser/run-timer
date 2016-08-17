@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="runTimer" lang="en">
+<html id="app" data-ng-app="runTimer" lang="en" ng-controller="AppController as app">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,16 +10,65 @@
     <link rel="icon" href="./images/favicon.png">
     <title>Run Timer</title>
     <link href="css/app.css" rel="stylesheet">
+    <link href="components/ng-dialog/css/ngDialog.min.css" rel="stylesheet">
+    <link href="components/ng-dialog/css/ngDialog-theme-default.min.css" rel="stylesheet">
+    <link href="components/angular-snap/angular-snap.min.css" rel="stylesheet">
+    <link href="components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <base href="/run-timer/">
 </head>
 <body>
-<div ng-view></div>
-<script src="https://code.jquery.com/jquery-2.2.3.min.js" type="text/javascript"></script>
-<script src="https://code.angularjs.org/1.5.5/angular.min.js" type="text/javascript"></script>
-<script src="https://code.angularjs.org/1.5.5/angular-route.min.js" type="text/javascript"></script>
-<script src="https://code.angularjs.org/1.5.5/angular-sanitize.min.js" type="text/javascript"></script>
-<script src="https://code.angularjs.org/1.5.5/angular-animate.min.js" type="text/javascript"></script>
-<script src="components/moment/min/moment-with-locales.min.js" type="text/javascript"></script>
-<script src="js/app.js" type="text/javascript"></script>
+    <!--<div ng-include="'partials/nav-bar.html'"></div>-->
+    <div snap-drawer>
+        <div id="context-menu">
+            <div class="sidebar-top">
+                <div class="title"><span>{{appData.title}}</span></div>
+            </div>
+            <div class="sidebar-main">
+                <div class="context-menu-item" ng-class="{active: applicationState.page == $root.PAGES.SETTINGS}" ng-click="app.home()">
+                    <span class="glyphicon glyphicon-home"></span>
+                    <span class="context-menu-item-name">HJEM</span>
+                </div>
+                <div class="context-menu-item" ng-click="app.time()">
+                    <span class="glyphicon glyphicon-time"></span>
+                    <span class="context-menu-item-name">TID</span>
+                </div>
+                <div class="context-menu-item" ng-click="app.checkIn()">
+                    <span class="glyphicon glyphicon-log-in"></span>
+                    <span class="context-menu-item-name">CHECK IN</span>
+                </div>
+                <div class="context-menu-item" ng-click="app.runners()">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <span class="context-menu-item-name">DELTAGERE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main-app" snap-content>
+        <div class="sidebar-gradient">
+            <div class="sidebar-top"></div>
+            <div class="sidebar-main"></div>
+        </div>
+        <div id="context-menu-button" class="button" snap-toggle>
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </div>
+        <div id="page-title-wrapper">
+            <div class="page-title"><div class="club-logo">&nbsp;</div><span>{{appData.title}}</span><div class="club-logo">&nbsp;</div></div>
+        </div>
+        <div id="time-status-wrapper">
+            <div class="time-status">{{appData.startTime ? (time | timeFormat) : "LØBET ER IKKE STARTET"}}</div>
+        </div>
+        <div id="main-content" ng-view></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" type="text/javascript"></script>
+    <script src="https://code.angularjs.org/1.5.5/angular.min.js" type="text/javascript"></script>
+    <script src="https://code.angularjs.org/1.5.5/angular-route.min.js" type="text/javascript"></script>
+    <script src="https://code.angularjs.org/1.5.5/angular-sanitize.min.js" type="text/javascript"></script>
+    <script src="https://code.angularjs.org/1.5.5/angular-animate.min.js" type="text/javascript"></script>
+    <script src="components/moment/min/moment.min.js" type="text/javascript"></script>
+    <script src="components/ng-dialog/js/ngDialog.min.js" type="text/javascript"></script>
+    <script src="components/snapjs/snap.min.js" type="text/javascript"></script>
+    <script src="components/angular-snap/angular-snap.min.js" type="text/javascript"></script>
+    <script src="components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/app.js" type="text/javascript"></script>
 </body>
 </html>

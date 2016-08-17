@@ -1,0 +1,39 @@
+@import (reference) "mixins.less";
+@import (reference) "colors.less";
+
+.form-text-input-wrapper {
+  border: 1px solid @std-border-color;
+  .border-radius(6px);
+  height: 100%;
+  width: 100%;
+  padding: 1px 8px;
+  cursor: text;
+  position: relative;
+
+  .form-text-input-error {
+    position: absolute;
+    left: 100%;
+    top: 16px;
+    padding-left: 15px;
+  }
+
+  .input-label {
+    font-size: 12px;
+    color: @placeholcer-text-color;
+  }
+
+  .input-wrapper {
+    margin: auto 0;
+    input {
+      height: 50px;
+      width: 100%;
+      outline: none;
+      border: none;
+      font-size: 18px;
+      &.has-placeholder {
+        height: 28px;
+        margin: 0;
+      }
+    }
+  }
+}

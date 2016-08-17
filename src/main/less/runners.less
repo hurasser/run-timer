@@ -1,0 +1,127 @@
+@import (reference) "mixins.less";
+@import (reference) "colors.less";
+
+#runners-content {
+
+  #page-title {
+    text-align: center;
+    font-size: 30pt;
+  }
+
+  #page-controls {
+    width: 540px;
+    height: 54px;
+    margin: 0 auto;
+    position: relative;
+
+    .filter-input {
+      display: inline-block;
+      height: 54px;
+      width: 300px;
+    }
+
+    .add-runner-button {
+      position: absolute;
+      top: 7px;
+      right: 0;
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      width: 150px;
+      text-align: center;
+      .border-radius(10px);
+      color: white;
+      font-size: 12pt;
+      background-color: @control-button-color;
+
+      .glyphicon {
+        margin-right: 3px;
+      }
+    }
+  }
+
+  #runner-entries-wrapper {
+    position: absolute;
+    top: 145px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+  }
+  #runner-entries-container {
+    text-align: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: scroll;
+  }
+
+  .runner-entry {
+    width: 540px;
+    margin: 8px auto;
+    text-align: left;
+
+    &.header {
+      padding-left: 30px;
+      .number {
+        text-align: center;
+      }
+      .sort-toggle {
+        display: inline-block;
+        font-size: 10pt;
+        input[type=checkbox] {
+          margin-left: 10px;
+          margin-right: 5px;
+        }
+      }
+      .sortable {
+        cursor: pointer;
+      }
+    }
+
+    .runner-entry-button {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      .border-radius(10px);
+      background-color: @control-button-color;
+
+      .glyphicon {
+        color: white;
+      }
+    }
+
+    .runner-entry-field {
+      display: inline-block;
+      height: 30px;
+      font-size: 14pt;
+
+      &.number {
+        width: 50px;
+        text-align: right;
+      }
+      &.name {
+        width: 350px;
+      }
+      &.age {
+        width: 50px;
+      }
+      &.gender {
+        width: 30px;
+
+        &.male {
+          background: url("../images/man.png") no-repeat 50% 50%;
+          background-size: contain;
+        }
+        &.female {
+          background: url("../images/woman.png") no-repeat 50% 50%;
+          background-size: contain;
+        }
+      }
+    }
+  }
+}

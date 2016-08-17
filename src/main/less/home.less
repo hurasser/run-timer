@@ -1,0 +1,164 @@
+#home-content {
+  text-align: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  #results-wrapper {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    right: 15px;
+    bottom: 20%;
+
+    #category-result-wrapper {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 70%;
+      text-align: left;
+      color: #444444;
+
+      .category-results {
+        height: 49%;
+
+        .category-title {
+          height: 30px;
+          line-height: 30px;
+          font-size: 20px;
+
+          span {
+            border-bottom: 1px solid #444444;
+          }
+        }
+
+        .category-row {
+          .category-field {
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+
+            &.placement {
+              width: 10%;
+            }
+
+            &.name {
+              width: 70%;
+              text-overflow: ellipsis;
+            }
+
+            &.time {
+              width: 19%;
+            }
+          }
+        }
+      }
+    }
+
+    #result-list-wrapper {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 70%;
+      right: 0;
+
+      .result-list-entry {
+        text-align: left;
+        font-size: 12pt;
+
+        .result-list-field {
+          display: inline-block;
+          white-space: nowrap;
+          overflow: hidden;
+
+          &.placement {
+            width: 10%;
+          }
+          &.name {
+            width: 71%;
+            text-overflow: ellipsis;
+          }
+          &.time {
+            width: 16%;
+          }
+        }
+
+        .sponsor-wrapper {
+          height: 80px;
+          text-align: center;
+          position: relative;
+
+          .sponsor-caption {
+            text-align: left;
+            font-size: 9pt;
+          }
+          .sponsor-logo-wrapper {
+            position: absolute;
+            top: 15px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+          }
+        }
+      }
+    }
+
+    #latest-results-wrapper {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 30%;
+      right: 30%;
+      text-align: left;
+
+      .result-row {
+        height: 30px;
+        font-size: 18px;
+
+        &.header {
+          height: 40px;
+          font-size: 24px;
+        }
+
+        div {
+          display: inline-block;
+        }
+      }
+
+      .result-number {
+        width: 18%;
+      }
+
+      .result-name {
+        width: 64%;
+      }
+
+      .result-time {
+        width: 12%;
+      }
+    }
+  }
+
+  #main-sponsor-wrapper {
+    position: absolute;
+    top: 80%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: left;
+
+    background: url("../images/main-sponsor.png") no-repeat 50% 50%;
+    background-size: contain;
+
+    #main-sponsor-text {
+      position: absolute;
+      bottom: 15px;
+      left: 25px;
+      font-size: 14pt;
+    }
+  }
+
+}

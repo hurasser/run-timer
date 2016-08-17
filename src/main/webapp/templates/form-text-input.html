@@ -1,0 +1,7 @@
+<div class="form-text-input-wrapper" ng-click="handleFocus($event)">
+	<span class="input-label" ng-show="focus || model">{{placeholder}}</span>
+	<div class="input-wrapper">
+		<input type="{{inputType}}" ng-class="{'has-placeholder': focus || model}" placeholder="{{focus || model ? '' : placeholder}}" data-ng-model="model" ng-focus="focus=true" ng-blur="focus=false" focus-me="focusMe"
+		ng-keyup="$event.keyCode == 13 && handleEnterPress()"/>
+	</div>
+</div>

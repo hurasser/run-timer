@@ -1,21 +1,30 @@
 'use strict';
-angular.module('runTimer', [ 'ngSanitize', 'ngRoute', 'ngAnimate']);
+angular.module('runTimer', ['ngSanitize', 'ngRoute', 'ngAnimate', 'snap', 'ngDialog']);
 
-angular.module('runTimer').config([ '$httpProvider', '$routeProvider', '$locationProvider', function($httpProvider, $routeProvider, $locationProvider) {
+angular.module('runTimer').config([ '$httpProvider', '$routeProvider', '$locationProvider', 'snapRemoteProvider', function($httpProvider, $routeProvider, $locationProvider, snapRemoteProvider) {
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
 
+    snapRemoteProvider.globalOptions = {
+        touchToDrag:false,
+        tapToClose:true
+    };
+
     $routeProvider.when('/', {
-        templateUrl : 'partials/home.html',
-        controller : 'HomeController'
+        templateUrl : 'pages/home.html',
+        controller : 'HomeController',
+        controllerAs : 'hc'
     }).when('/check-in', {
-        templateUrl : 'partials/check-in.html',
-        controller : 'CheckInController'
+        templateUrl : 'pages/check-in.html',
+        controller : 'CheckInController',
+        controllerAs : 'cc'
     }).when('/time', {
-        templateUrl : 'partials/time.html',
-        controller : 'TimeController'
-    }).when('/start-time', {
-        templateUrl : 'partials/start-time.html',
-        controller : 'StartTimeController'
+        templateUrl : 'pages/time.html',
+        controller : 'TimeController',
+        controllerAs : 'tc'
+    }).when('/runners', {
+        templateUrl : 'pages/runners.html',
+        controller : 'RunnersController',
+        controllerAs : 'rc'
     }).otherwise({
         redirectTo : '/'
     });

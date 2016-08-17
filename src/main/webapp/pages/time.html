@@ -1,0 +1,20 @@
+<div id="time-content">
+    <div ng-show="!appData.startTime">
+        <div ng-show="!raceStarting" id="start-race-button" class="button" ng-click="tc.startRace()">START LØBET</div>
+    </div>
+    <div ng-show="appData.startTime">
+        <div class="time-button-row add">
+            <div class="time-button button" ng-click="tc.adjustTime(10)">+10s</div>
+            <div class="time-button button" ng-click="tc.adjustTime(1)">+1s</div>
+            <div class="time-button button" ng-click="tc.adjustTime(0.1)">+0.1s</div>
+        </div>
+        <div class="time-button-row sub">
+            <div class="time-button button" ng-click="tc.adjustTime(-10)">-10s</div>
+            <div class="time-button button" ng-click="tc.adjustTime(-1)">-1s</div>
+            <div class="time-button button" ng-click="tc.adjustTime(-0.1)">-0.1s</div>
+        </div>
+        <div class="time-button-row reset">
+            <div class="reset-button button" ng-click="tc.reset()">Nulstil</div>
+        </div>
+    </div>
+</div>

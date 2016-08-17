@@ -1,0 +1,27 @@
+<div id="runners-content">
+    <div id="page-title">Deltager liste</div>
+    <div id="page-controls">
+        <div class="filter-input" form-text-input placeholder="Filter" model="runnersData.filter"></div>
+        <div class="add-runner-button button" ng-click="rc.showAddRunner()"><span class="glyphicon glyphicon-plus"></span><span>Tilføj deltager</span></div>
+    </div>
+    <div class="runner-entry header">
+        <div class="runner-entry-field number sortable" ng-click="rc.sortBy('number')">Num.</div>
+        <div class="runner-entry-field name">
+            <span class="sortable" ng-click="rc.sortBy('name')">Navn</span>
+            <div class="sort-toggle"><label><input type="checkbox" ng-model="runnersData.sortByLastName"><span>Sortér efter efternavn</span></label></div>
+        </div>
+        <div class="runner-entry-field age sortable" ng-click="rc.sortBy('age')">Alder</div>
+        <div class="runner-entry-field gender">Køn</div>
+    </div>
+    <div id="runner-entries-wrapper">
+        <div id="runner-entries-container">
+            <div class="runner-entry" ng-repeat="runner in appData.runners | filter : runnersData.filter | orderBy : rc.sortKey">
+                <div class="runner-entry-button edit-button button" ng-click="rc.editRunner(runner)"><span class="glyphicon glyphicon-pencil"></span></div>
+                <div class="runner-entry-field number">{{runner.number}}</div>
+                <div class="runner-entry-field name">{{runnersData.sortByLastName ? runner.lastName + ", " + runner.firstName : runner.firstName + " " + runner.lastName}}</div>
+                <div class="runner-entry-field age">{{runner.age}}</div>
+                <div class="runner-entry-field gender" ng-class="{male: runner.gender == 'MALE', female: runner.gender == 'FEMALE'}">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>

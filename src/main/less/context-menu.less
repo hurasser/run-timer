@@ -1,0 +1,28 @@
+@import (reference) "colors.less";
+
+#context-menu {
+  .title {
+    color: white;
+    margin: 20px 0 0 15px;
+    font-size: 16px;
+  }
+
+  .context-menu-item {
+    margin: 10px 0 0 15px;
+    cursor: pointer;
+    color: @context-menu-text-color;
+
+    .glyphicon, .bnrglyph {
+      margin-right: 3px;
+    }
+
+    &.active {
+      color: white;
+    }
+  }
+
+  .context-menu-divider {
+    margin: 15px 0;
+    border-bottom: 1px solid @context-menu-text-color;
+  }
+}

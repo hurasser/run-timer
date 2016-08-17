@@ -1,0 +1,56 @@
+<div id="home-content">
+    <div id="results-wrapper">
+        <div id="category-result-wrapper">
+            <div class="category-results" ng-repeat="category in appData.categoryResults">
+                <div class="category-title"><span>{{category.categoryTitle}}</span></div>
+                <div class="category-row header">
+                    <div class="category-field placement">#</div>
+                    <div class="category-field name">Navn</div>
+                    <div class="category-field result">Tid</div>
+                </div>
+                <div class="category-row" ng-repeat="result in category.results | orderBy : time">
+                    <div class="category-field placement">{{$index + 1}}</div>
+                    <div class="category-field name">{{result.name}}</div>
+                    <div class="category-field result">{{result.time | timeFormat}}</div>
+                </div>
+            </div>
+        </div>
+        <div id="latest-results-wrapper">
+            <div class="section-title"><span>Seneste resultater</span></div>
+            <div class="result-row header">
+                <div class="result-number">Nummer</div>
+                <div class="result-name">Navn</div>
+                <div class="result-time">Tid</div>
+            </div>
+            <div class="result-row" ng-repeat="result in appData.results | orderBy : time" >
+                <div class="result-number">{{result.number}}</div>
+                <div class="result-name">{{result.name}}</div>
+                <div class="result-time">{{result.time | timeFormat}}</div>
+            </div>
+        </div>
+        <div id="result-list-wrapper">
+            <div class="section-title"><span>Alle resultater</span></div>
+            <div class="result-list-entry header">
+                <div class="result-list-field placement">#</div>
+                <div class="result-list-field name">Navn</div>
+                <div class="result-list-field time">Tid</div>
+            </div>
+            <div class="result-list-entry" ng-repeat="result in appData.resultList">
+                <div class="entry-wrapper">
+                    <div class="result-list-field placement">{{$index + 1}}</div>
+                    <div class="result-list-field name">{{result.name}}</div>
+                    <div class="result-list-field time">{{result.time | timeFormat}}</div>
+                </div>
+                <div class="sponsor-wrapper" ng-show="($index + 1) % 10 == 0">
+                    <div class="sponsor-caption">{{hc.getSponsorForIndex($index).caption}}</div>
+                    <div class="sponsor-logo-wrapper" back-img="{{hc.getSponsorForIndex($index).logoUrl}}">
+                        <!--<img class="sponsor-logo" ng-src="{{hc.getSponsorForIndex($index).logoUrl}}">-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main-sponsor-wrapper">
+        <div id="main-sponsor-text">Hovedsponsor: Kvickly Åbyhøj</div>
+    </div>
+</div>

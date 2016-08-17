@@ -7,6 +7,8 @@ plugins {
 group 'com.runit'
 version '0.0.1'
 
+def logPath = '/Users/rasmus/logs/run-timer'
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -38,3 +40,19 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
+
+processResources {
+    eachFile { copyDetails ->
+        if (copyDetails.path == 'log4j2.xml') {
+            filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [LOG_PATH_TOKEN: logPath])
+        }
+    }
+}
+
+task('buildForProd', dependsOn: ['clean', 'gulp_less', 'gulp_js']) << {
+    logPath = '/var/log/wildfly'
+}
+
+tasks.processResources.mustRunAfter tasks.buildForProd
+
+

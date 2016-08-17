@@ -1,79 +1,103 @@
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '0101', 'Logo');
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '0102', 'Zon tabel');
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '0103', 'Rekvisitions tabel');
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '0104', 'Kreditkort tabel');
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '0105', 'Tillägs tabel');
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '0106', 'Kredittype tabel');
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '0107', 'MegTax tabel');
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '2101', 'Au2Tax program');
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '2102', 'Tariff tabel');
-INSERT INTO ResourceType (created, lastUpdated, identifier, name) VALUES (now(), now(), '2103', 'Kvitto logo');
+INSERT INTO Race (created, lastUpdated, startTime) VALUES (now(), now(), NULL);
 
-INSERT INTO Server (created, lastUpdated, name, identifier) VALUES (now(), now(), 'Taxi Göteborg', 30);
-
-SET @server1id = (SELECT id FROM Server WHERE identifier = 30);
-
-INSERT INTO Central (created, lastUpdated, name, identifier, serverId) VALUES (now(), now(), 'Taxi Göteborg', 1, @server1id);
-INSERT INTO Central (created, lastUpdated, name, identifier, serverId) VALUES (now(), now(), 'Taxi Göteborg utbilding', 3, @server1id);
-INSERT INTO Central (created, lastUpdated, name, identifier, serverId) VALUES (now(), now(), 'Taxi Kungsbocka', 4, @server1id);
-INSERT INTO Central (created, lastUpdated, name, identifier, serverId) VALUES (now(), now(), 'Taxi Stenungsund', 5, @server1id);
-INSERT INTO Central (created, lastUpdated, name, identifier, serverId) VALUES (now(), now(), 'Öckerö', 6, @server1id);
-INSERT INTO Central (created, lastUpdated, name, identifier, serverId) VALUES (now(), now(), 'VOLVO AB', 30, @server1id);
-
-SET @server1central1id = (SELECT id FROM Central WHERE identifier = 1 AND serverId = @server1id);
-
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 1', @server1central1id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 2', @server1central1id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 3', @server1central1id);
-
-SET @server1central1setting1id = (SELECT id FROM Setting WHERE centralId = @server1central1id AND name = 'Setting 1');
-UPDATE Central SET defaultSettingId = @server1central1setting1id WHERE id = @server1central1id;
-
-SET @server1central2id = (SELECT id FROM Central WHERE identifier = 3 AND serverId = @server1id);
-
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 1', @server1central2id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 2', @server1central2id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 3', @server1central2id);
-
-SET @server1central2setting1id = (SELECT id FROM Setting WHERE centralId = @server1central2id AND name = 'Setting 1');
-UPDATE Central SET defaultSettingId = @server1central2setting1id WHERE id = @server1central2id;
-
-SET @server1central3id = (SELECT id FROM Central WHERE identifier = 4 AND serverId = @server1id);
-
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 1', @server1central3id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 2', @server1central3id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 3', @server1central3id);
-
-SET @server1central3setting1id = (SELECT id FROM Setting WHERE centralId = @server1central3id AND name = 'Setting 1');
-UPDATE Central SET defaultSettingId = @server1central3setting1id WHERE id = @server1central3id;
-
-SET @server1central4id = (SELECT id FROM Central WHERE identifier = 5 AND serverId = @server1id);
-
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 1', @server1central4id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 2', @server1central4id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 3', @server1central4id);
-
-SET @server1central4setting1id = (SELECT id FROM Setting WHERE centralId = @server1central4id AND name = 'Setting 1');
-UPDATE Central SET defaultSettingId = @server1central4setting1id WHERE id = @server1central4id;
-
-SET @server1central5id = (SELECT id FROM Central WHERE identifier = 6 AND serverId = @server1id);
-
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 1', @server1central5id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 2', @server1central5id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 3', @server1central5id);
-
-SET @server1central5setting1id = (SELECT id FROM Setting WHERE centralId = @server1central5id AND name = 'Setting 1');
-UPDATE Central SET defaultSettingId = @server1central5setting1id WHERE id = @server1central5id;
-
-SET @server1central6id = (SELECT id FROM Central WHERE identifier = 30 AND serverId = @server1id);
-
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 1', @server1central6id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 2', @server1central6id);
-INSERT INTO Setting (created, lastUpdated, name, centralId) VALUES (now(), now(), 'Setting 3', @server1central6id);
-
-SET @server1central6setting1id = (SELECT id FROM Setting WHERE centralId = @server1central6id AND name = 'Setting 1');
-UPDATE Central SET defaultSettingId = @server1central6setting1id WHERE id = @server1central6id;
-
-INSERT INTO User (created, lastUpdated, email, digest, salt, username) VALUES (now(), now(), 'rasmus@bnr.dk', 'mlbhpOHV+z3aY7BEn4HRx01ziXGx5g9cmbSd8xpg1zg=', 'xsYlxEK79BGjo+fxhr86cMhToPUPo4PJSJoVxkwS0oI=', 'rasmus');
-INSERT INTO User (created, lastUpdated, email, digest, salt, username) VALUES (now(), now(), 'mikkel@bnr.dk', 'mlbhpOHV+z3aY7BEn4HRx01ziXGx5g9cmbSd8xpg1zg=', 'xsYlxEK79BGjo+fxhr86cMhToPUPo4PJSJoVxkwS0oI=', 'mikkel');
-INSERT INTO User (created, lastUpdated, email, digest, salt, username) VALUES (now(), now(), 'tommy@bnr.dk', 'mlbhpOHV+z3aY7BEn4HRx01ziXGx5g9cmbSd8xpg1zg=', 'xsYlxEK79BGjo+fxhr86cMhToPUPo4PJSJoVxkwS0oI=', 'tommy');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Emil Lindhard', 'Pedersen', 1, NULL, 6, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Christina Malene Lindhard', 'Jørgensen', 2, NULL, 34, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Nanna Nedergaard', 'Kristensen', 3, NULL, 20, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Peter', 'Wistoft', 4, NULL, 52, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Helle Nedergaard', 'Nielsen', 5, NULL, 53, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Kirsten', 'Skade', 6, NULL, 48, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Peter', 'Mortensen', 7, NULL, 48, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Eva', 'Serup', 8, NULL, 38, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Mads Faurschou', 'Knudsen', 9, NULL, 41, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Asbjørn Serup', 'Knudsen', 10, NULL, 8, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Johanna Serup', 'Knudsen', 11, NULL, 5, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Kasper', 'Fey-Hansen', 12, NULL, 35, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Dinah', 'Fey-Hansen', 13, NULL, 36, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Silke', 'Fey-Hansen', 14, NULL, 4, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Alba', 'Fey-Hansen', 15, NULL, 2, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Lars', 'Østergaard', 16, NULL, 57, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Kjeld', 'Mogensen', 17, NULL, 48, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Hanne Saxgreen', 'Svenningsen', 18, NULL, 59, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Freja Saxgreen', 'Svenningsen', 19, NULL, 21, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Lone', 'Nedergaard', 20, NULL, 46, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Mille', 'Jørgensen', 21, NULL, 16, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Cecilie', 'Bjørnhaug', 22, NULL, 17, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Jeanette', 'Johansen', 23, NULL, 48, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Christian', 'Nielsen', 24, NULL, 12, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Anna Hassø', 'Ochsner', 25, NULL, 10, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Randi', 'Mortensen', 26, NULL, 35, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Gustav', 'Skydt-Nielsen', 27, NULL, 12, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Caroline Winther', 'Tørring', 28, NULL, 38, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Thomas Winther', 'Frederiksen', 29, NULL, 41, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Emil Winther', 'Tørring', 30, NULL, 9, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Simon Winther', 'Tørring', 31, NULL, 9, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Johanne Winther', 'Tørring', 32, NULL, 5, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Ulrik', 'Heitmann', 33, NULL, 32, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Asger', 'Friis', 34, NULL, 14, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Luise', 'Friis', 35, NULL, 10, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Anders', 'Møller', 36, NULL, 41, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Bertil Krogh', 'Møller', 37, NULL, 7, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Johan Krogh', 'Møller', 38, NULL, 5, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Leif', 'Petersson', 39, NULL, 55, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Nikolaj', 'Friis', 40, NULL, 15, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Elsebeth Herborg', 'Krogh', 41, NULL, 67, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Jens', 'Wørzner', 42, NULL, 57, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Gitte', 'KarlshøJ', 43, NULL, 57, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Anette', 'Lysgaard', 44, NULL, 47, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Marie Paludan', 'Mogensen', 45, NULL, 9, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Louise Paludan', 'Mogensen', 46, NULL, 11, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Jens Bak', 'Sørensen', 47, NULL, 43, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Gustav Bak', 'Odgaard', 48, NULL, 7, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Ina Bøge', 'Eskildsen', 49, NULL, 39, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Emil Bøge', 'Eskildsen', 50, NULL, 10, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Astrid Bøge', 'Eskildsen', 51, NULL, 7, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Henrik Hauthorn', 'Jensen', 52, NULL, 50, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Ida Hauthorn', 'Svennevig', 53, NULL, 7, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Randi Mosch', 'Steffens', 54, NULL, 41, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Olivia Ørum', 'Steffens', 55, NULL, 7, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Henrik', 'Hoffman', 56, NULL, 52, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Hanne', 'Snedker', 57, NULL, 44, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Jesper', 'Sandahl', 58, NULL, 47, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Anne Sofie', 'Sandahl', 59, NULL, 11, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Katrine', 'Sandahl', 60, NULL, 8, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Jacob', 'Sandahl', 61, NULL, 6, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Karsten Nygaard', 'Henriksen', 62, NULL, 43, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Tanja Nygaard', 'Henriksen', 63, NULL, 42, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Anna Nygaard', 'Henriksen', 64, NULL, 8, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Esben Nygaard', 'Henriksen', 65, NULL, 6, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Asger', 'Brendstrup', 66, NULL, 10, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Jeppe Viborg', 'Hviid', 67, NULL, 36, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Line Knudsgaard', 'Hviid', 68, NULL, 35, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Allan', 'Sølvsten', 69, NULL, 48, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Christoffer Foss', 'Sølvsten', 70, NULL, 15, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Casper Foss', 'Sølvsten', 71, NULL, 13, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Cille Foss', 'Sølvsten', 72, NULL, 10, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Nikolaj', 'Tørring', 73, NULL, 30, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Peter Birch', 'Nielsen', 74, NULL, 46, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Anna', 'Koch', 75, NULL, 19, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Mathilde', 'Kratmann', 76, NULL, 6, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Karsten', 'Høgild', 77, NULL, 43, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Charlotte', 'Mentz', 78, NULL, 48, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Michael', 'Andresen', 79, NULL, 43, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Karina Grønbech', 'Andresen', 80, NULL, 41, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Margrethe Grønbech', 'Andresen', 81, NULL, 9, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Johannes Grønbech', 'Andresen', 82, NULL, 7, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Gustav Grønbech', 'Andresen', 83, NULL, 4, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Tina Skaarup', 'Olesen', 84, NULL, 51, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Lene', 'Rode', 85, NULL, 44, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Sophia', 'Rode', 86, NULL, 14, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Rosa', 'Rode', 87, NULL, 8, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Barbara Balskilde', 'Stoltenborg', 88, NULL, 9, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Lars', 'Budolfsen', 89, NULL, 34, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Claus', 'Hvass', 90, NULL, 45, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Liva', 'Hvass', 91, NULL, 9, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Ronja', 'Hvass', 92, NULL, 6, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Thomas', 'Loft', 93, NULL, 50, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Nicki', 'Vogelius', 94, NULL, 50, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Thorbjørn', 'Hansen', 95, NULL, 50, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Lars', 'Valdbo', 96, NULL, 50, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Asger', 'Krogh', 97, NULL, 19, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Kaj', 'Aakjær', 98, NULL, 50, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Mia', 'Aakjær', 99, NULL, 50, 'FEMALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Benjamin', 'Aakjær', 100, NULL, 50, 'MALE');
+INSERT INTO Runner (created, lastUpdated, firstName, lastName, runnerNumber, email, age, gender) VALUES (now(), now(), 'Jonas Rasmussen', 'Lærke', 101, NULL, 50, 'MALE');

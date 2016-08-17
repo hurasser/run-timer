@@ -1,0 +1,29 @@
+<div id="add-runner-wrapper">
+    <div class="dialog-title">{{!!addRunnerData.id ? 'Rediger deltager' : 'Tilføj deltager'}}</div>
+    <div class="dialog-input-row">
+        <div class="dialog-input" form-text-input placeholder="Nummer" model="addRunnerData.number"></div>
+    </div>
+    <div class="dialog-input-row">
+        <div class="dialog-input" form-text-input placeholder="Fornavn" model="addRunnerData.firstName"></div>
+    </div>
+    <div class="dialog-input-row">
+        <div class="dialog-input" form-text-input placeholder="Efternavn" model="addRunnerData.lastName"></div>
+    </div>
+    <div class="dialog-input-row">
+        <div class="dialog-input small age" form-text-input placeholder="Alder" model="addRunnerData.age"></div>
+        <div class="dialog-radio-input">
+            <label>
+                <input type="radio" ng-model="addRunnerData.gender" value="MALE">
+                <div class="radio-image male">&nbsp;</div>
+            </label>
+            <label>
+                <input type="radio" ng-model="addRunnerData.gender" value="FEMALE">
+                <div class="radio-image female">&nbsp;</div>
+            </label>
+        </div>
+    </div>
+    <div id="dialog-control-buttons">
+        <div class="dialog-button button add" ng-click="arc.save()"><span class="glyphicon glyphicon-ok"></span><span>Gem {{!!addRunnerData.id ? "ændringer" : "deltager"}}</span></div>
+        <div class="dialog-button button cancel" ng-click="arc.cancel()"><span class="glyphicon glyphicon-remove"></span><span>Annuller</span></div>
+    </div>
+</div>

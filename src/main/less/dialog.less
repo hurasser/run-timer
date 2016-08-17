@@ -1,0 +1,108 @@
+@import (reference) "mixins.less";
+@import (reference) "colors.less";
+
+#app {
+
+  .ngdialog.ngdialog-theme-default .ngdialog-content {
+    width: 580px;
+    padding: 20px;
+  }
+
+  .dialog-title {
+    font-size: 24pt;
+    font-weight: 500;
+    padding: 20px 0;
+  }
+
+  .dialog-input-row {
+    height: 56px;
+    margin: 10px 25px;
+    position: relative;
+  }
+
+  .dialog-input {
+    text-align: left;
+    height: 56px;
+    display: inline-block;
+    width: 450px;
+
+    &.small {
+      width: 238px;
+    }
+  }
+
+  .radio-image {
+    display: inline-block;
+    height: 56px;
+    width: 56px;
+  }
+
+  .dialog-radio-input {
+    display: inline-block;
+    margin-left: 40px;
+
+    label {
+      margin-right: 20px;
+      line-height: 56px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+    #add-runner-wrapper {
+    width: 540px;
+    height: 420px;
+    background-color: white;
+    text-align: center;
+    margin: 0;
+
+    #dialog-control-buttons {
+
+      .dialog-button {
+        display: inline-block;
+        color: white;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 12pt;
+        margin: 20px;
+        .border-radius(14px);
+
+        .glyphicon {
+          margin-right: 5px;
+        }
+
+        &.add {
+          background-color: @control-button-color;
+        }
+
+        &.cancel {
+          background-color: @cancel-button-color;
+        }
+      }
+    }
+    .dialog-input-row {
+      .dialog-input.age {
+        position: absolute;
+        top: 0;
+        left: 20px;
+      }
+    }
+
+    .dialog-radio-input {
+      position: absolute;
+      top: 0;
+      right: 15px;
+
+      .male {
+        background: url("../images/man.png") no-repeat 50% 50%;
+        background-size: contain;
+      }
+      .female {
+        background: url("../images/woman.png") no-repeat 50% 50%;
+        background-size: contain;
+      }
+    }
+  }
+}

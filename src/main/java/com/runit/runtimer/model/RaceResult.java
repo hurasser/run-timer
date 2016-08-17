@@ -7,23 +7,30 @@ import javax.persistence.Entity;
 public class RaceResult extends DomainObject {
 
     private int runnerNumber;
-    private int timeInSeconds;
+    private int timeInMillis;
 
+    public RaceResult() {}
+
+    public RaceResult(int runnerNumber, int timeInSeconds) {
+        this.runnerNumber = runnerNumber;
+        this.timeInMillis = timeInSeconds;
+    }
+
+    @Column
     public int getRunnerNumber() {
         return runnerNumber;
     }
 
-    @Column
     public void setRunnerNumber(int runnerNumber) {
         this.runnerNumber = runnerNumber;
     }
 
-    public int getTimeInSeconds() {
-        return timeInSeconds;
+    @Column
+    public int getTimeInMillis() {
+        return timeInMillis;
     }
 
-    @Column
-    public void setTimeInSeconds(int timeInSeconds) {
-        this.timeInSeconds = timeInSeconds;
+    public void setTimeInMillis(int timeInMillis) {
+        this.timeInMillis = timeInMillis;
     }
 }
