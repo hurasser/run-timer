@@ -1,3 +1,5 @@
+@import (reference) "mixins.less";
+
 #home-content {
   text-align: center;
   position: relative;
@@ -65,6 +67,26 @@
       left: 70%;
       right: 0;
 
+      #result-list-scroller {
+        position: absolute;
+        top: 56px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        opacity: 1;
+        .transition(opacity 2000ms linear);
+
+        &.ng-hide {
+          opacity: 0;
+        }
+
+        #result-list-scroll-item-wrapper {
+          position: relative;
+          white-space: nowrap;
+        }
+      }
+
       .result-list-entry {
         text-align: left;
         font-size: 12pt;
@@ -82,26 +104,25 @@
             text-overflow: ellipsis;
           }
           &.time {
+            text-align: right;
             width: 16%;
           }
         }
+      }
+      .sponsor-wrapper {
+        height: 80px;
+        text-align: center;
+        position: relative;
 
-        .sponsor-wrapper {
-          height: 80px;
-          text-align: center;
-          position: relative;
-
-          .sponsor-caption {
-            text-align: left;
-            font-size: 9pt;
-          }
-          .sponsor-logo-wrapper {
-            position: absolute;
-            top: 15px;
-            bottom: 0;
-            left: 0;
-            right: 0;
-          }
+        .sponsor-caption {
+          font-size: 9pt;
+        }
+        .sponsor-logo-wrapper {
+          position: absolute;
+          top: 15px;
+          bottom: 0;
+          left: 0;
+          right: 0;
         }
       }
     }

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('runTimer', ['ngSanitize', 'ngRoute', 'ngAnimate', 'snap', 'ngDialog']);
+angular.module('runTimer', ['ngSanitize', 'ngRoute', 'ngAnimate', 'snap', 'ngDialog', 'duScroll']);
 
 angular.module('runTimer').config([ '$httpProvider', '$routeProvider', '$locationProvider', 'snapRemoteProvider', function($httpProvider, $routeProvider, $locationProvider, snapRemoteProvider) {
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';

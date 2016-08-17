@@ -29,7 +29,7 @@ angular.module('runTimer').factory('resultService', ["$http", "$window", "$inter
         saveResultCache(resultCache);
     };
 
-    $interval(sendCachedResults, 10000);
+    $interval(sendCachedResults, 5000);
 
     return self;
 }]);

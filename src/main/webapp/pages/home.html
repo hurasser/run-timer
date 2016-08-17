@@ -35,16 +35,24 @@
                 <div class="result-list-field name">Navn</div>
                 <div class="result-list-field time">Tid</div>
             </div>
-            <div class="result-list-entry" ng-repeat="result in appData.resultList">
-                <div class="entry-wrapper">
-                    <div class="result-list-field placement">{{$index + 1}}</div>
-                    <div class="result-list-field name">{{result.name}}</div>
-                    <div class="result-list-field time">{{result.time | timeFormat}}</div>
-                </div>
-                <div class="sponsor-wrapper" ng-show="($index + 1) % 10 == 0">
-                    <div class="sponsor-caption">{{hc.getSponsorForIndex($index).caption}}</div>
-                    <div class="sponsor-logo-wrapper" back-img="{{hc.getSponsorForIndex($index).logoUrl}}">
-                        <!--<img class="sponsor-logo" ng-src="{{hc.getSponsorForIndex($index).logoUrl}}">-->
+            <div id="result-list-scroller" result-scroller element-container-id="result-list-scroll-item-wrapper" scroll-finished="hc.resultScrollFinished()" is-hidden="isHidden" ng-if="!!appData.resultList" ng-show="!isHidden">
+                <div id="result-list-scroll-item-wrapper">
+                    <div class="result-list-entry" ng-repeat="result in appData.resultList" repeat-done-event="event:rendering:resultList">
+                        <div class="entry-wrapper">
+                            <div class="result-list-field placement">{{$index + 1}}</div>
+                            <div class="result-list-field name">{{result.name}}</div>
+                            <div class="result-list-field time">{{result.time | timeFormat}}</div>
+                        </div>
+                        <div class="sponsor-wrapper" ng-show="($index + 1) % 10 == 0">
+                            <div class="sponsor-caption">{{hc.getSponsorForIndex($index).caption}}</div>
+                            <div class="sponsor-logo-wrapper" back-img="{{hc.getSponsorForIndex($index).logoUrl}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sponsor-wrapper" ng-repeat="sponsor in hc.getUnshownSponsors()">
+                        <div class="sponsor-caption">{{sponsor.caption}}</div>
+                        <div class="sponsor-logo-wrapper" back-img="{{sponsor.logoUrl}}">
+                        </div>
                     </div>
                 </div>
             </div>

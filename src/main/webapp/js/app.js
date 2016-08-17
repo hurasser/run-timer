@@ -1,5 +1,5 @@
 'use strict';
-angular.module('runTimer', ['ngSanitize', 'ngRoute', 'ngAnimate', 'snap', 'ngDialog']);
+angular.module('runTimer', ['ngSanitize', 'ngRoute', 'ngAnimate', 'snap', 'ngDialog', 'duScroll']);
 
 angular.module('runTimer').config([ '$httpProvider', '$routeProvider', '$locationProvider', 'snapRemoteProvider', function($httpProvider, $routeProvider, $locationProvider, snapRemoteProvider) {
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
@@ -64,13 +64,24 @@ angular.module('runTimer').controller('AddRunnerController', ["$scope", "$rootSc
         return !!$scope.addRunnerData.number && !!$scope.addRunnerData.firstName && !!$scope.addRunnerData.lastName && !!$scope.addRunnerData.gender;
     };
 }]);
-angular.module('runTimer').controller('AppController', ["$scope", "$http", "$location", "$interval", "snapRemote", "timeService", function ($scope, $http, $location, $interval, snapRemote, timeService) {
+angular.module('runTimer').controller('AppController', ["$scope", "$http", "$location", "$interval", "$timeout", "snapRemote", "timeService", function ($scope, $http, $location, $interval, $timeout, snapRemote, timeService) {
     var self = this;
 
     function updateTime() {
         $scope.time = timeService.getTime();
     }
 
+    function checkRaceStarted() {
+        $http.get('api/race/start').then(function(response) {
+            if (response.data.startTime) {
+                $scope.appData.startTime = response.data.startTime;
+                timeService.init(response.data.startTime);
+                $interval(updateTime, 50);
+            } else {
+                $timeout(checkRaceStarted, 5000);
+            }
+        });
+    }
     $scope.appData = {title: "Åbyhøjløbet 2016"};
 
     self.home = function() {
@@ -93,13 +104,7 @@ angular.module('runTimer').controller('AppController', ["$scope", "$http", "$loc
         snapRemote.close();
     };
 
-    $http.get('api/race/start').then(function(response) {
-        if (response.data.startTime) {
-            $scope.appData.startTime = response.data.startTime;
-            timeService.init(response.data.startTime);
-            $interval(updateTime, 50);
-        }
-    });
+    checkRaceStarted();
 
     $scope.$on("event:race:started", function() { $interval(updateTime, 50) });
 }]);
@@ -114,46 +119,73 @@ angular.module('runTimer').controller('CheckInController', ["$scope", "resultSer
     }
 }]);
 
-angular.module('runTimer').controller('HomeController', ["$scope", "$http", "$interval", function ($scope, $http, $interval) {
+angular.module('runTimer').controller('HomeController', ["$scope", "$rootScope", "$http", "$interval", "$timeout", function ($scope, $rootScope, $http, $interval, $timeout) {
     var self = this;
     var timer;
     var nextCategoryIndex = 0;
+    var shouldGetCategories = true;
 
     self.sprintSponsors = [
-        {caption: 'Spurtpræmie sponsor 1', logoUrl: 'images/sponsor-logos/sportsmaster.png'},
-        {caption: 'Spurtpræmie sponsor 2', logoUrl: 'images/sponsor-logos/sportsmaster.png'},
-        {caption: 'Spurtpræmie sponsor 3', logoUrl: 'images/sponsor-logos/sportsmaster.png'},
-        {caption: 'Spurtpræmie sponsor 4', logoUrl: 'images/sponsor-logos/sportsmaster.png'},
-        {caption: 'Hoved sponsor', logoUrl: 'images/main-sponsor.png'}
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/sportsmaster.png'},
+        {caption: 'Nummersponsor', logoUrl: 'images/sponsor-logos/bayship.jpeg'},
+        {caption: 'Hovedsponsor', logoUrl: 'images/main-sponsor.png'}
     ];
 
     function getResults() {
         $http.get('api/race/results').then(function(response) {
             $scope.appData.results = response.data;
         });
-        $http.get('api/race/categoryResults/' + nextCategoryIndex).then(function(response) {
-            $scope.appData.categoryResults = response.data;
-            if (response.data != null && response.data.length > 0) {
-                nextCategoryIndex = response.data[response.data.length -1].categoryIndex + 1;
+        // We only update categories every 2nd time
+        if (shouldGetCategories) {
+            shouldGetCategories = false;
+            $http.get('api/race/categoryResults/' + nextCategoryIndex).then(function(response) {
+                $scope.appData.categoryResults = response.data;
+                if (response.data != null && response.data.length > 0) {
+                    nextCategoryIndex = response.data[response.data.length -1].categoryIndex + 1;
+                }
+            });
+        } else {
+            shouldGetCategories = true;
+        }
+    }
+
+    function getResultList() {
+        $http.get('api/race/resultList').then(function (response) {
+            $scope.appData.resultList = response.data;
+            if (response.data.length == 0) {
+                // Manually declare rendering done, since there are no elements. Use timeout to give directive time to initialize
+                $timeout(function() {$rootScope.$broadcast('event:rendering:resultList')}, 100);
             }
         });
     }
-
-    timer = $interval(getResults, 10000);
+    timer = $interval(getResults, 5000);
 
     $scope.$on('$destroy', function() {
         $interval.cancel(timer);
     });
 
     getResults();
-
-    $http.get('api/race/resultList').then(function(response) {
-        $scope.appData.resultList = response.data;
-    });
+    getResultList();
 
     self.getSponsorForIndex = function(index) {
         var sponsorIndex = (Math.floor((index + 1) / 10) - 1) % self.sprintSponsors.length;
         return self.sprintSponsors[sponsorIndex];
+    };
+
+    self.getUnshownSponsors = function() {
+        if (!$scope.appData.resultList) return [];
+        var runnerCount = $scope.appData.resultList.length;
+        var nextSponsorIndex = Math.floor((runnerCount) / 10);
+        if (nextSponsorIndex >= self.sprintSponsors.length) {
+            return [];
+        } else {
+            return self.sprintSponsors.slice(nextSponsorIndex);
+        }
+    };
+
+    self.resultScrollFinished = function() {
+        $scope.appData.resultList = null;
+        $timeout(getResultList, 1000);
     }
 }]);
 
@@ -278,6 +310,59 @@ angular.module('runTimer').directive('formTextInput', [function() {
 	}
 }]);
 
+angular.module('runTimer').directive('repeatDoneEvent', ["$rootScope", function($rootScope) {
+    return {
+        link : function(scope, elem, attrs) {
+            if (scope.$last) {
+                $rootScope.$broadcast(attrs.repeatDoneEvent);
+            }
+        }
+    }
+}]);
+
+angular.module('runTimer').directive('resultScroller', ['$timeout', function($timeout){
+    return {
+        restrict : 'A',
+        scope : {
+            scrollFinished: '&',
+            elementContainerId: '@',
+            isHidden: '='
+        },
+        link : function(scope, elem, attrs) {
+            scope.isHidden = true;
+
+            function fadeIn() {
+                scope.isHidden = false;
+                $timeout(initScroll, 5000);
+            }
+
+            function initScroll() {
+                var elementContainerElement = angular.element("#" + scope.elementContainerId);
+                var elementContainerHeight = elementContainerElement.height();
+                var scrollerHeight = elem.height();
+                elem.duScrollTop(elementContainerHeight - scrollerHeight, (elementContainerHeight - scrollerHeight) * 26, function(x) {return x}).then(waitForFadeOut);
+            }
+
+            function waitForFadeOut() {
+                $timeout(fadeOut, 5000);
+            }
+
+            function fadeOut() {
+                scope.isHidden = true;
+                $timeout(resetScrollAndNotify, 5000);
+            }
+
+            function resetScrollAndNotify() {
+                scope.scrollFinished();
+            }
+
+            scope.$on('event:rendering:resultList', function() {
+                $timeout(fadeIn, 1000);
+            });
+        }
+    }
+}]);
+
 angular.module('runTimer').filter('timeFormat', function() {
     return function(timeInMillis) {
         var days = Math.floor(timeInMillis / 86400000);
@@ -321,7 +406,7 @@ angular.module('runTimer').factory('resultService', ["$http", "$window", "$inter
         saveResultCache(resultCache);
     };
 
-    $interval(sendCachedResults, 10000);
+    $interval(sendCachedResults, 5000);
 
     return self;
 }]);

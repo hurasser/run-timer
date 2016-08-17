@@ -1,10 +1,21 @@
-angular.module('runTimer').controller('AppController', ["$scope", "$http", "$location", "$interval", "snapRemote", "timeService", function ($scope, $http, $location, $interval, snapRemote, timeService) {
+angular.module('runTimer').controller('AppController', ["$scope", "$http", "$location", "$interval", "$timeout", "snapRemote", "timeService", function ($scope, $http, $location, $interval, $timeout, snapRemote, timeService) {
     var self = this;
 
     function updateTime() {
         $scope.time = timeService.getTime();
     }
 
+    function checkRaceStarted() {
+        $http.get('api/race/start').then(function(response) {
+            if (response.data.startTime) {
+                $scope.appData.startTime = response.data.startTime;
+                timeService.init(response.data.startTime);
+                $interval(updateTime, 50);
+            } else {
+                $timeout(checkRaceStarted, 5000);
+            }
+        });
+    }
     $scope.appData = {title: "Åbyhøjløbet 2016"};
 
     self.home = function() {
@@ -27,13 +38,7 @@ angular.module('runTimer').controller('AppController', ["$scope", "$http", "$loc
         snapRemote.close();
     };
 
-    $http.get('api/race/start').then(function(response) {
-        if (response.data.startTime) {
-            $scope.appData.startTime = response.data.startTime;
-            timeService.init(response.data.startTime);
-            $interval(updateTime, 50);
-        }
-    });
+    checkRaceStarted();
 
     $scope.$on("event:race:started", function() { $interval(updateTime, 50) });
 }]);
