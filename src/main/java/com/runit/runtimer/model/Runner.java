@@ -34,6 +34,10 @@ public class Runner extends DomainObject {
         this.lastName = lastName;
     }
 
+    public String fullName() {
+        return firstName + " " + lastName;
+    }
+
     @Column
     public int getAge() {
         return age;

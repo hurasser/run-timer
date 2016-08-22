@@ -25,6 +25,10 @@ angular.module('runTimer').config([ '$httpProvider', '$routeProvider', '$locatio
         templateUrl : 'pages/runners.html',
         controller : 'RunnersController',
         controllerAs : 'rc'
+    }).when('/admin', {
+        templateUrl : 'pages/admin.html',
+        controller : 'AdminController',
+        controllerAs : 'ac'
     }).otherwise({
         redirectTo : '/'
     });
@@ -64,6 +68,89 @@ angular.module('runTimer').controller('AddRunnerController', ["$scope", "$rootSc
         return !!$scope.addRunnerData.number && !!$scope.addRunnerData.firstName && !!$scope.addRunnerData.lastName && !!$scope.addRunnerData.gender;
     };
 }]);
+angular.module('runTimer').controller('AdminController', ["$scope", "$http", "$filter", function ($scope, $http, $filter) {
+    var self = this;
+    
+    $scope.adminData = {};
+
+    function performSearch(number) {
+        $http.get('api/race/runnerResults', {params: {runnerNumber: number}}).then(function(response) {
+            $scope.adminData.runnerResults = response.data;
+        });
+    }
+
+    self.search = function() {
+        if (!$scope.adminData.runnerNumber || isNaN($scope.adminData.runnerNumber)) return;
+        $scope.adminData.runnersWithDuplicates = null;
+        $scope.adminData.runnerResults = null;
+        performSearch($scope.adminData.runnerNumber);
+    };
+
+    self.findDuplicates = function() {
+        $scope.adminData.runnerResults = null;
+        $http.get('api/race/runner/multipleResults').then(function(response) {
+            $scope.adminData.runnersWithDuplicates = response.data;
+        });
+    };
+
+    self.findNoResults = function() {
+        $scope.adminData.runnerResults = null;
+        $http.get('api/race/runner/noResult').then(function(response) {
+            $scope.adminData.runnersWithDuplicates = response.data;
+        });
+    };
+
+    self.getResultsForRunnerNumber = function(number) {
+        $scope.adminData.runnersWithDuplicates = null;
+        performSearch(number);
+    };
+    
+    self.editNumber = function(result) {
+        result.editingNumber = true;
+        result.newNumber = result.number;
+    };
+
+    self.editTime = function(result) {
+        result.editingTime = true;
+        result.oldTime = $filter('timeFormat')(result.time);
+        result.newTime = result.oldTime;
+    };
+
+    self.submitResult = function(result) {
+        if (result.newNumber == result.number && result.newTime == result.oldTime) return;
+        var timeInMillis = 0;
+        var timePattern = /^\d?\d(:\d\d){0,2}$/;
+        if (timePattern.test(result.newTime)) {
+            var timeArray = result.newTime.split(":");
+            var timeMultArray = [1000, 60000, 3600000];
+            for (var i = 0; i< timeArray.length; i++) {
+                timeInMillis += parseInt(timeArray[timeArray.length - (i + 1)]) * timeMultArray[i];
+            }
+        } else {
+            timeInMillis = result.time;
+        }
+        $http.post('api/race/editResult', {id: result.id, number: result.newNumber || result.number, time: timeInMillis}).then(function(response) {
+            var newResult = response.data;
+            result.time = newResult.time;
+            result.newTime = null;
+            result.oldTime = null;
+            result.name = newResult.name;
+            result.number = newResult.number;
+            result.newNumber = null;
+            result.editingNumber = false;
+            result.editingTime = false;
+        });
+    };
+
+    self.deleteResult = function(result) {
+        $http.delete('api/race/result/' + result.id).then(function() {
+            var index = $scope.adminData.runnerResults.indexOf(result);
+            if (index >= 0) {
+                $scope.adminData.runnerResults.splice(index, 1);
+            }
+        });
+    }
+}]);
 angular.module('runTimer').controller('AppController', ["$scope", "$http", "$location", "$interval", "$timeout", "snapRemote", "timeService", function ($scope, $http, $location, $interval, $timeout, snapRemote, timeService) {
     var self = this;
 
@@ -73,8 +160,9 @@ angular.module('runTimer').controller('AppController', ["$scope", "$http", "$loc
 
     function checkRaceStarted() {
         $http.get('api/race/start').then(function(response) {
-            if (response.data.startTime) {
+            if (response.data.isFinished || response.data.startTime) {
                 $scope.appData.startTime = response.data.startTime;
+                $scope.appData.isFinished = response.data.isFinished;
                 timeService.init(response.data.startTime);
                 $interval(updateTime, 50);
             } else {
@@ -104,6 +192,11 @@ angular.module('runTimer').controller('AppController', ["$scope", "$http", "$loc
         snapRemote.close();
     };
 
+    self.admin = function() {
+        $location.path("admin");
+        snapRemote.close();
+    };
+
     checkRaceStarted();
 
     $scope.$on("event:race:started", function() { $interval(updateTime, 50) });
@@ -125,14 +218,37 @@ angular.module('runTimer').controller('HomeController', ["$scope", "$rootScope",
     var nextCategoryIndex = 0;
     var shouldGetCategories = true;
 
-    self.sprintSponsors = [
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/sportsmaster.png'},
+    self.sponsors = [
+        {caption: 'Hovedsponsor', logoUrl: 'images/main-sponsor.png'},
         {caption: 'Nummersponsor', logoUrl: 'images/sponsor-logos/bayship.jpeg'},
-        {caption: 'Hovedsponsor', logoUrl: 'images/main-sponsor.png'}
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/sportmaster.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/apotek.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/bertoni.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/cafe_stedet.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/delizioso.jpg'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/dykkerbutikken.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/hn_gavekurve.jpeg'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/intersport.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/pepitos.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/inspiration.jpeg'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/klippestuen.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/koc_kebab.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/magnolia.jpg'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/mr.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/s_import.jpg'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/sams.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/asics.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/jyske_bank.svg'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/oel.png'},
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/lavigna.png'}
     ];
 
+    self.numberOfLatestResultsToShow = 10;
+    self.runnersBetweenSponsors = 7;
+    self.nextSponsorIndex = 0;
+
     function getResults() {
-        $http.get('api/race/results').then(function(response) {
+        $http.get('api/race/results', {params: {numberOfResults: self.numberOfLatestResultsToShow}}).then(function(response) {
             $scope.appData.results = response.data;
         });
         // We only update categories every 2nd time
@@ -168,24 +284,35 @@ angular.module('runTimer').controller('HomeController', ["$scope", "$rootScope",
     getResultList();
 
     self.getSponsorForIndex = function(index) {
-        var sponsorIndex = (Math.floor((index + 1) / 10) - 1) % self.sprintSponsors.length;
-        return self.sprintSponsors[sponsorIndex];
+        var sponsorIndex = (Math.floor((index + 1) / self.runnersBetweenSponsors) - 1) % self.sponsors.length;
+        return self.sponsors[sponsorIndex];
+    };
+
+    self.getNextSponsor = function() {
+        if (!self.sponsors || self.sponsors.length == 0) return null;
+        var sponsor = self.sponsors[self.nextSponsorIndex];
+        self.nextSponsorIndex = (self.nextSponsorIndex < self.sponsors.length + 1) ? self.nextSponsorIndex + 1 : 0;
+        return sponsor;
     };
 
     self.getUnshownSponsors = function() {
         if (!$scope.appData.resultList) return [];
         var runnerCount = $scope.appData.resultList.length;
-        var nextSponsorIndex = Math.floor((runnerCount) / 10);
-        if (nextSponsorIndex >= self.sprintSponsors.length) {
+        var nextSponsorIndex = Math.floor((runnerCount) / self.runnersBetweenSponsors);
+        if (nextSponsorIndex >= self.sponsors.length) {
             return [];
         } else {
-            return self.sprintSponsors.slice(nextSponsorIndex);
+            return self.sponsors.slice(nextSponsorIndex);
         }
     };
 
     self.resultScrollFinished = function() {
         $scope.appData.resultList = null;
         $timeout(getResultList, 1000);
+    }
+
+    self.setNumberOfLatestResults = function(count) {
+        self.numberOfLatestResultsToShow = count;
     }
 }]);
 
@@ -282,6 +409,23 @@ angular.module('runTimer').directive('backImg', function(){
         });
     };
 });
+angular.module('runTimer').directive('containerSpaceCallback', [function() {
+    return {
+        restrict : 'A',
+        scope : {
+            containerSpaceCallback: '&',
+            elementSize: '@'
+        },
+        link : function(scope, elem, attrs) {
+            var elementSize = parseInt(scope.elementSize);
+            if (isNaN(elementSize)) {
+                elementSize = 30;
+            }
+            scope.containerSpaceCallback({count: Math.floor(elem.height() / elementSize)});
+        }
+    }
+}]);
+
 angular.module('runTimer').directive('formTextInput', [function() {
 	return {
 		templateUrl : 'templates/form-text-input.html',

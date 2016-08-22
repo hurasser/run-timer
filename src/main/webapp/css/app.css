@@ -82,7 +82,7 @@ input[type=number]::-webkit-outer-spin-button {
   bottom: 0;
   left: 0;
   width: 8px;
-  z-index: 2000;
+  z-index: 100;
 }
 .sidebar-top {
   position: absolute;
@@ -121,7 +121,7 @@ input[type=number]::-webkit-outer-spin-button {
   position: absolute;
   top: 10px;
   left: -15px;
-  z-index: 4242;
+  z-index: 150;
 }
 #context-menu-button .glyphicon {
   line-height: 46px;
@@ -142,6 +142,162 @@ input[type=number]::-webkit-outer-spin-button {
 .ng-cloak,
 .x-ng-cloak {
   display: none ! important;
+}
+
+#admin-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+#admin-container .button {
+  color: white;
+}
+#admin-container #admin-controls-container {
+  height: 56px;
+  width: 100%;
+  text-align: center;
+}
+#admin-container #admin-controls-container #admin-controls-wrapper {
+  text-align: left;
+  display: inline-block;
+  width: 620px;
+  position: relative;
+}
+#admin-container #admin-controls-container #runner-number-input {
+  display: inline-block;
+  height: 56px;
+  width: 200px;
+  text-align: left;
+}
+#admin-container #admin-controls-container .admin-control-button {
+  position: absolute;
+  top: 0;
+  display: inline-block;
+  height: 56px;
+  width: 76px;
+  font-size: 30px;
+  line-height: 56px;
+  -webkit-border-radius: 19px;
+  -moz-border-radius: 19px;
+  border-radius: 19px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background-color: #00AC7F;
+}
+#admin-container #admin-controls-container #submit-runner-number-button {
+  left: 210px;
+}
+#admin-container #admin-controls-container #search-duplicates-button {
+  left: 350px;
+}
+#admin-container #admin-controls-container #search-no-result-button {
+  left: 436px;
+}
+#admin-container #admin-runner-results {
+  text-align: center;
+  margin-top: 15px;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper {
+  display: inline-block;
+  width: 632px;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result {
+  width: 682px;
+  height: 56px;
+  font-size: 20px;
+  text-align: left;
+  position: relative;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-runner-result-field {
+  display: inline-block;
+  width: 200px;
+  margin-left: 10px;
+  position: absolute;
+  top: 0;
+  line-height: 56px;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-runner-result-field.number {
+  left: 40px;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-runner-result-field.name {
+  left: 250px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-runner-result-field.time {
+  left: 460px;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-runner-result-field .edit-field-button {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background-color: #00AC7F;
+  margin-top: 13px;
+  float: right;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-edit {
+  display: inline-block;
+  height: 54px;
+  width: 200px;
+  font-size: 14px;
+  margin-left: 10px;
+  position: absolute;
+  top: 0;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-edit.number {
+  left: 40px;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-edit.time {
+  left: 460px;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-action-button {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  margin-top: 13px;
+  margin-right: 10px;
+  float: left;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-action-button.admin-submit-button {
+  background-color: #00AC7F;
+}
+#admin-container #admin-runner-results #admin-runner-results-wrapper .admin-runner-result .admin-action-button.admin-delete-button {
+  background-color: #AC1111;
+}
+#admin-container #admin-duplicates {
+  text-align: center;
+}
+#admin-container #admin-duplicates #admin-duplicates-wrapper {
+  width: 632px;
+  display: inline-block;
+}
+#admin-container #admin-duplicates #admin-duplicates-wrapper .admin-duplicate-entry {
+  margin: 8px 0;
+  font-size: 16px;
+  text-align: left;
+}
+#admin-container #admin-duplicates #admin-duplicates-wrapper .admin-duplicate-entry span {
+  cursor: pointer;
 }
 
 #check-in-container {
@@ -174,6 +330,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
+#context-menu {
+  z-index: 100;
+}
 #context-menu .title {
   color: white;
   margin: 20px 0 0 15px;
@@ -330,6 +489,15 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
   height: 100%;
 }
+#home-content #home-scroll-preventer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 50;
+  opacity: 0;
+}
 #home-content #results-wrapper {
   position: absolute;
   top: 0;
@@ -422,17 +590,18 @@ input[type=number]::-webkit-outer-spin-button {
   width: 16%;
 }
 #home-content #results-wrapper #result-list-wrapper .sponsor-wrapper {
-  height: 80px;
+  height: 120px;
   text-align: center;
   position: relative;
+  padding: 10px 0;
 }
 #home-content #results-wrapper #result-list-wrapper .sponsor-wrapper .sponsor-caption {
   font-size: 9pt;
 }
 #home-content #results-wrapper #result-list-wrapper .sponsor-wrapper .sponsor-logo-wrapper {
   position: absolute;
-  top: 15px;
-  bottom: 0;
+  top: 25px;
+  bottom: 10px;
   left: 0;
   right: 0;
 }
@@ -443,6 +612,13 @@ input[type=number]::-webkit-outer-spin-button {
   left: 30%;
   right: 30%;
   text-align: left;
+}
+#home-content #results-wrapper #latest-results-wrapper #latest-results-entries-wrapper {
+  position: absolute;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 #home-content #results-wrapper #latest-results-wrapper .result-row {
   height: 30px;

@@ -4,6 +4,16 @@ import com.runit.runtimer.model.Gender;
 
 public class U15Category implements ResultCategory {
     @Override
+    public String getCategoryId() {
+        return "U15";
+    }
+
+    @Override
+    public String getCategoryName() {
+        return "U15";
+    }
+
+    @Override
     public String getTitle() {
         return "Resultater - U15";
     }

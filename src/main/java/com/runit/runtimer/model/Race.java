@@ -7,6 +7,7 @@ import java.util.Date;
 public class Race extends DomainObject {
 
     private Date startTime;
+    private boolean finished;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column
@@ -16,5 +17,14 @@ public class Race extends DomainObject {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    @Column
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 }

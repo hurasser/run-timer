@@ -1,4 +1,5 @@
 <div id="home-content">
+    <div id="home-scroll-preventer"></div>
     <div id="results-wrapper">
         <div id="category-result-wrapper">
             <div class="category-results" ng-repeat="category in appData.categoryResults">
@@ -22,10 +23,12 @@
                 <div class="result-name">Navn</div>
                 <div class="result-time">Tid</div>
             </div>
-            <div class="result-row" ng-repeat="result in appData.results | orderBy : time" >
-                <div class="result-number">{{result.number}}</div>
-                <div class="result-name">{{result.name}}</div>
-                <div class="result-time">{{result.time | timeFormat}}</div>
+            <div id="latest-results-entries-wrapper" container-space-callback="hc.setNumberOfLatestResults(count)">
+                <div class="result-row" ng-repeat="result in appData.results | orderBy : time" >
+                    <div class="result-number">{{result.number}}</div>
+                    <div class="result-name">{{result.name}}</div>
+                    <div class="result-time">{{result.time | timeFormat}}</div>
+                </div>
             </div>
         </div>
         <div id="result-list-wrapper">
@@ -43,7 +46,7 @@
                             <div class="result-list-field name">{{result.name}}</div>
                             <div class="result-list-field time">{{result.time | timeFormat}}</div>
                         </div>
-                        <div class="sponsor-wrapper" ng-show="($index + 1) % 10 == 0">
+                        <div class="sponsor-wrapper" ng-show="($index + 1) % hc.runnersBetweenSponsors == 0">
                             <div class="sponsor-caption">{{hc.getSponsorForIndex($index).caption}}</div>
                             <div class="sponsor-logo-wrapper" back-img="{{hc.getSponsorForIndex($index).logoUrl}}">
                             </div>

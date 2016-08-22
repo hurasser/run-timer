@@ -53,6 +53,10 @@ task('buildForProd', dependsOn: ['clean', 'gulp_less', 'gulp_js']) << {
     logPath = '/var/log/wildfly'
 }
 
+task('buildForLocal', dependsOn: ['clean', 'gulp_less', 'gulp_js']) << {
+    logPath = '/Users/rasmus/logs/run-timer'
+}
+
 tasks.processResources.mustRunAfter tasks.buildForProd
 
 

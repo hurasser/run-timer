@@ -8,6 +8,7 @@ import com.runit.runtimer.model.category.ResultCategory;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Stateless
 public class RaceRepository {
@@ -16,11 +17,6 @@ public class RaceRepository {
     private static final int MAX_RESULTS_FOR_CATRGORY = 5;
     @PersistenceContext(unitName = "run-timer-persistance-unit")
     private EntityManager em;
-
-    public List<Race> getActiveRaces() {
-        TypedQuery<Race> query = em.createQuery("SELECT r FROM Race r WHERE r.startTime IS NOT NULL", Race.class);
-        return query.getResultList();
-    }
 
     public Race getRace() {
         TypedQuery<Race> query = em.createQuery("SELECT r FROM Race r", Race.class);
@@ -55,9 +51,10 @@ public class RaceRepository {
         }
     }
 
-    public List<Runner> getLatestRunners() {
+    public List<Runner> getLatestRunners(int numberOfResults) {
         TypedQuery<Runner> query = em.createQuery("SELECT r FROM Runner r WHERE r.resultInMillis IS NOT NULL ORDER BY r.resultInMillis desc", Runner.class);
-        query.setMaxResults(MAX_RESULTS_FOR_LATEST);
+        if (numberOfResults == 0) numberOfResults = MAX_RESULTS_FOR_LATEST;
+        query.setMaxResults(numberOfResults);
         return query.getResultList();
     }
 
@@ -67,6 +64,14 @@ public class RaceRepository {
     }
 
     public List<Runner> getLeadingRunnersByCategory(ResultCategory category) {
+        return getResultsByCategory(category, false);
+    }
+
+    public List<Runner> getResultsByCategory(ResultCategory category) {
+        return getResultsByCategory(category, true);
+    }
+
+    private List<Runner> getResultsByCategory(ResultCategory category, boolean fullList) {
         TypedQuery<Runner> query;
         if (category.getGender() != null) {
             query = em.createQuery("SELECT r FROM Runner r WHERE r.age BETWEEN :minAge AND :maxAge AND r.gender = :gender AND r.resultInMillis IS NOT NULL ORDER BY r.resultInMillis asc", Runner.class);
@@ -76,7 +81,9 @@ public class RaceRepository {
         }
         query.setParameter("minAge", category.getMinAge());
         query.setParameter("maxAge", category.getMaxAge());
-        query.setMaxResults(MAX_RESULTS_FOR_CATRGORY);
+        if (!fullList) {
+            query.setMaxResults(MAX_RESULTS_FOR_CATRGORY);
+        }
         return query.getResultList();
     }
 
@@ -87,5 +94,35 @@ public class RaceRepository {
 
     public void createRunner(Runner runner) {
         em.persist(runner);
+    }
+
+    public List<RaceResult> getResultsForRunnerNumber(int runnerNumber) {
+        TypedQuery<RaceResult> query = em.createQuery("SELECT rr FROM RaceResult rr WHERE rr.runnerNumber = :runnerNumber", RaceResult.class);
+        query.setParameter("runnerNumber", runnerNumber);
+        return query.getResultList();
+    }
+
+    public RaceResult getResultById(int id) {
+        return em.find(RaceResult.class, id);
+    }
+
+    public void deleteResult(RaceResult result) {
+        em.remove(result);
+    }
+
+    public List<Integer> getRunnerNumbersWithMultipleResults() {
+        TypedQuery<Integer> query = em.createQuery("SELECT DISTINCT r1.runnerNumber FROM RaceResult r1, RaceResult r2 WHERE r1.runnerNumber = r2.runnerNumber AND r1.id <> r2.id GROUP BY r1.runnerNumber", Integer.class);
+        return query.getResultList();
+    }
+
+    public List<Runner> getRunnersWithNumbers(List<Integer> runnerNumbers) {
+        TypedQuery<Runner> query = em.createQuery("SELECT r FROM Runner r WHERE r.runnerNumber IN :runnerNumbers", Runner.class);
+        query.setParameter("runnerNumbers", runnerNumbers);
+        return query.getResultList();
+    }
+
+    public List<Runner> getRunnersWithNoResult() {
+        TypedQuery<Runner> query = em.createQuery("SELECT r FROM Runner r WHERE r.resultInMillis IS NULL", Runner.class);
+        return query.getResultList();
     }
 }

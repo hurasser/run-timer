@@ -25,6 +25,10 @@ angular.module('runTimer').config([ '$httpProvider', '$routeProvider', '$locatio
         templateUrl : 'pages/runners.html',
         controller : 'RunnersController',
         controllerAs : 'rc'
+    }).when('/admin', {
+        templateUrl : 'pages/admin.html',
+        controller : 'AdminController',
+        controllerAs : 'ac'
     }).otherwise({
         redirectTo : '/'
     });

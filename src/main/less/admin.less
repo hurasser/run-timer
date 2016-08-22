@@ -1,0 +1,167 @@
+@import (reference) "mixins.less";
+@import (reference) "colors.less";
+
+#admin-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .button {
+    color: white;
+  }
+
+  #admin-controls-container {
+    height: 56px;
+    width: 100%;
+    text-align: center;
+
+    #admin-controls-wrapper {
+      text-align: left;
+      display: inline-block;
+      width: 620px;
+      position: relative;
+    }
+
+    #runner-number-input {
+      display: inline-block;
+      height: 56px;
+      width: 200px;
+      text-align: left;
+    }
+
+    .admin-control-button {
+      position: absolute;
+      top: 0;
+      display: inline-block;
+      height: 56px;
+      width: 76px;
+      font-size: 30px;
+      line-height: 56px;
+      .border-radius(19px);
+      background-color: @control-button-color;
+    }
+
+    #submit-runner-number-button {
+      left: 210px;
+    }
+
+    #search-duplicates-button {
+      left: 350px;
+    }
+
+    #search-no-result-button {
+      left: 436px;
+    }
+
+  }
+
+  #admin-runner-results {
+    text-align: center;
+    margin-top: 15px;
+
+    #admin-runner-results-wrapper {
+      display: inline-block;
+      width: 632px;
+
+      .admin-runner-result {
+        width: 682px;
+        height: 56px;
+        font-size: 20px;
+        text-align: left;
+        position: relative;
+
+        .admin-runner-result-field {
+          display: inline-block;
+          width: 200px;
+          margin-left: 10px;
+          position: absolute;
+          top: 0;
+          line-height: 56px;
+
+          &.number {
+            left: 40px;
+          }
+          &.name {
+            left: 250px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+          &.time {
+            left: 460px;
+          }
+
+          .edit-field-button {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            .border-radius(10px);
+            background-color: @control-button-color;
+            margin-top: 13px;
+            float: right;
+          }
+        }
+
+        .admin-edit {
+          display: inline-block;
+          height: 54px;
+          width: 200px;
+          font-size: 14px;
+          margin-left: 10px;
+          position: absolute;
+          top: 0;
+
+          &.number {
+            left: 40px;
+          }
+          &.time {
+            left: 460px;
+          }
+        }
+
+        .admin-action-button {
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          text-align: center;
+          line-height: 30px;
+          .border-radius(10px);
+          margin-top: 13px;
+          margin-right: 10px;
+          float: left;
+
+          &.admin-submit-button {
+            background-color: @control-button-color;
+          }
+          &.admin-delete-button {
+            background-color: @cancel-button-color;
+          }
+        }
+
+      }
+    }
+  }
+
+  #admin-duplicates {
+    text-align: center;
+
+    #admin-duplicates-wrapper {
+      width: 632px;
+      display: inline-block;
+
+      .admin-duplicate-entry {
+        margin: 8px 0;
+        font-size: 16px;
+        text-align: left;
+
+        span {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

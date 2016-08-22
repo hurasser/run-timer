@@ -4,6 +4,16 @@ import com.runit.runtimer.model.Gender;
 
 public class WomenCategory implements ResultCategory {
     @Override
+    public String getCategoryId() {
+        return "AllWomen";
+    }
+
+    @Override
+    public String getCategoryName() {
+        return "Kvinder";
+    }
+
+    @Override
     public String getTitle() {
         return "Resultater - Kvinder";
     }
@@ -15,11 +25,11 @@ public class WomenCategory implements ResultCategory {
 
     @Override
     public int getMaxAge() {
-        return 0;
+        return 200;
     }
 
     @Override
     public Gender getGender() {
-        return null;
+        return Gender.FEMALE;
     }
 }

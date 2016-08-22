@@ -1,11 +1,10 @@
 package com.runit.runtimer.resource;
 
-import com.runit.runtimer.dto.ActiveRaceDto;
+import com.runit.runtimer.dto.RaceDto;
 import com.runit.runtimer.dto.CategoryResultResponse;
 import com.runit.runtimer.dto.ResultDto;
 import com.runit.runtimer.dto.RunnerDto;
 import com.runit.runtimer.model.Race;
-import com.runit.runtimer.model.Runner;
 import com.runit.runtimer.service.RaceService;
 
 import javax.inject.Inject;
@@ -24,8 +23,8 @@ public class RaceResource {
     @GET
     @Path("/start")
     public Response getStartTime() {
-        Race race = raceService.getActiveRace();
-        if (race != null) return Response.ok(new ActiveRaceDto(race.getStartTime().getTime())).build();
+        Race race = raceService.getRace();
+        if (race != null) return Response.ok(new RaceDto(race)).build();
         return Response.noContent().build();
     }
 
@@ -38,8 +37,8 @@ public class RaceResource {
 
     @GET
     @Path("/results")
-    public Response getLatestResults() {
-        List<ResultDto> results = raceService.getLatestResults();
+    public Response getLatestResults(@QueryParam("numberOfResults") int numberOfResults) {
+        List<ResultDto> results = raceService.getLatestResults(numberOfResults);
         return Response.ok(results).build();
     }
 
@@ -83,5 +82,44 @@ public class RaceResource {
     public Response updateRunner(RunnerDto dto) {
         raceService.updateRunner(dto);
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("/runnerResults")
+    public Response getResultsForRunner(@QueryParam("runnerNumber") int runnerNumber) {
+//        if (runnerNumber == 42) {
+//            raceService.printResults();
+//            raceService.printDNF();
+//        }
+        List<ResultDto> results = raceService.getResultsForRunnerNumber(runnerNumber);
+        return Response.ok(results).build();
+    }
+
+    @POST
+    @Path("/editResult")
+    public Response editResult(ResultDto dto) {
+        ResultDto editedDto = raceService.editResult(dto);
+        return Response.ok(editedDto).build();
+    }
+
+    @DELETE
+    @Path("/result/{resultId}")
+    public Response deleteResult(@PathParam("resultId") int resultId) {
+        raceService.deleteResult(resultId);
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/runner/multipleResults")
+    public Response getRunnersWithMultipleResults() {
+        List<RunnerDto> runners = raceService.getRunnersWithMultipleResults();
+        return Response.ok(runners).build();
+    }
+
+    @GET
+    @Path("/runner/noResult")
+    public Response getRunnersWithNoResult() {
+        List<RunnerDto> runners = raceService.getRunnersWithNoResult();
+        return Response.ok(runners).build();
     }
 }

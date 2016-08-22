@@ -40,6 +40,10 @@
                     <span class="glyphicon glyphicon-user"></span>
                     <span class="context-menu-item-name">DELTAGERE</span>
                 </div>
+                <div class="context-menu-item" ng-click="app.admin()">
+                    <span class="glyphicon glyphicon-wrench"></span>
+                    <span class="context-menu-item-name">ADMIN</span>
+                </div>
             </div>
         </div>
     </div>
@@ -55,7 +59,7 @@
             <div class="page-title"><div class="club-logo">&nbsp;</div><span>{{appData.title}}</span><div class="club-logo">&nbsp;</div></div>
         </div>
         <div id="time-status-wrapper">
-            <div class="time-status">{{appData.startTime ? (time | timeFormat) : "LØBET ER IKKE STARTET"}}</div>
+            <div class="time-status">{{appData.isFinished ? "LØBET ER AFSLUTTET" : (appData.startTime ? (time | timeFormat) : "LØBET ER IKKE STARTET")}}</div>
         </div>
         <div id="main-content" ng-view></div>
     </div>

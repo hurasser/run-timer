@@ -1,0 +1,30 @@
+<div id="admin-container">
+    <div id="admin-controls-container">
+        <div id="admin-controls-wrapper">
+            <div id="runner-number-input" form-text-input placeholder="Nummer" model="adminData.runnerNumber"></div>
+            <div id="submit-runner-number-button" class="admin-control-button button" ng-click="ac.search()"><span class="glyphicon glyphicon-question-sign"></span></div>
+            <div id="search-duplicates-button" class="admin-control-button button" ng-click="ac.findDuplicates()"><span class="glyphicon glyphicon-alert"></span></div>
+            <div id="search-no-result-button" class="admin-control-button button" ng-click="ac.findNoResults()"><span class="glyphicon glyphicon-minus"></span></div>
+        </div>
+    </div>
+    <div id="admin-runner-results">
+        <div id="admin-runner-results-wrapper">
+            <div class="admin-runner-result" ng-repeat="result in adminData.runnerResults">
+                <div class="admin-runner-result-field number" ng-show="!result.editingNumber"><span>{{result.number}}</span><div class="edit-field-button button" ng-click="ac.editNumber(result)"><span class="glyphicon glyphicon-pencil"></span></div></div>
+                <div class="admin-edit number" form-text-input placeholder="Nummer" ng-show="result.editingNumber" model="result.newNumber"></div>
+                <div class="admin-runner-result-field name"><span>{{result.name}}</span></div>
+                <div class="admin-runner-result-field time" ng-show="!result.editingTime"><span>{{result.time | timeFormat}}</span><div class="edit-field-button button" ng-click="ac.editTime(result)"><span class="glyphicon glyphicon-pencil"></span></div></div>
+                <div class="admin-edit time" form-text-input placeholder="Tid" ng-show="result.editingTime" model="result.newTime"></div>
+                <div class="admin-action-button admin-submit-button button" ng-show="(result.newNumber && result.newNumber != result.number) || (result.newTime && result.newTime != result.oldTime)" ng-click="ac.submitResult(result)"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="admin-action-button admin-delete-button button" ng-show="!(result.newNumber && result.newNumber != result.number) && !(result.newTime && result.newTime != result.oldTime)" ng-click="ac.deleteResult(result)"><span class="glyphicon glyphicon-trash"></span></div>
+            </div>
+        </div>
+    </div>
+    <div id="admin-duplicates">
+        <div id="admin-duplicates-wrapper">
+            <div class="admin-duplicate-entry" ng-repeat="runner in adminData.runnersWithDuplicates | orderBy : 'number'">
+                <span ng-click="ac.getResultsForRunnerNumber(runner.number)">{{runner.number + " " + runner.firstName + " " + runner.lastName}}</span>
+            </div>
+        </div>
+    </div>
+</div>

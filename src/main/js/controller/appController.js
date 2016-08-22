@@ -7,8 +7,9 @@ angular.module('runTimer').controller('AppController', ["$scope", "$http", "$loc
 
     function checkRaceStarted() {
         $http.get('api/race/start').then(function(response) {
-            if (response.data.startTime) {
+            if (response.data.isFinished || response.data.startTime) {
                 $scope.appData.startTime = response.data.startTime;
+                $scope.appData.isFinished = response.data.isFinished;
                 timeService.init(response.data.startTime);
                 $interval(updateTime, 50);
             } else {
@@ -35,6 +36,11 @@ angular.module('runTimer').controller('AppController', ["$scope", "$http", "$loc
 
     self.runners = function() {
         $location.path("runners");
+        snapRemote.close();
+    };
+
+    self.admin = function() {
+        $location.path("admin");
         snapRemote.close();
     };
 
