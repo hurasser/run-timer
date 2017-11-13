@@ -170,7 +170,7 @@ angular.module('runTimer').controller('AppController', ["$scope", "$http", "$loc
             }
         });
     }
-    $scope.appData = {title: "Åbyhøjløbet 2016"};
+    $scope.appData = {title: "Åbyhøjløbet 2017"};
 
     self.home = function() {
         $location.path("");
@@ -222,25 +222,26 @@ angular.module('runTimer').controller('HomeController', ["$scope", "$rootScope",
         {caption: 'Hovedsponsor', logoUrl: 'images/main-sponsor.png'},
         {caption: 'Nummersponsor', logoUrl: 'images/sponsor-logos/bayship.jpeg'},
         {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/sportmaster.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/apotek.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/bertoni.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/cafe_stedet.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/delizioso.jpg'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/dykkerbutikken.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/hn_gavekurve.jpeg'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/intersport.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/pepitos.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/inspiration.jpeg'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/klippestuen.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/koc_kebab.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/magnolia.jpg'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/mr.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/s_import.jpg'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/sams.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/apotek.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/bertoni.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/cafe_stedet.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/delizioso.jpg'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/dykkerbutikken.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/hn_gavekurve.jpeg'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/intersport.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/pepitos.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/inspiration.jpeg'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/klippestuen.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/koc_kebab.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/magnolia.jpg'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/mr.png'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/s_import.jpg'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/sams.png'},
         {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/asics.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/jyske_bank.svg'},
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/jyske_bank.svg'},
         {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/oel.png'},
-        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/lavigna.png'}
+        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/danske_bank_logo.png'}
+//        {caption: 'Spurtpræmie sponsor', logoUrl: 'images/sponsor-logos/lavigna.png'}
     ];
 
     self.numberOfLatestResultsToShow = 10;

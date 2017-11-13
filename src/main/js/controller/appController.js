@@ -17,7 +17,7 @@ angular.module('runTimer').controller('AppController', ["$scope", "$http", "$loc
             }
         });
     }
-    $scope.appData = {title: "Åbyhøjløbet 2016"};
+    $scope.appData = {title: "Åbyhøjløbet 2017"};
 
     self.home = function() {
         $location.path("");

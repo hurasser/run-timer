@@ -12,6 +12,7 @@ import com.runit.runtimer.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.io.*;
@@ -54,6 +55,13 @@ public class RaceService {
         categoryMap.put(categoryCount++, new U18Category());
         categoryMap.put(categoryCount++, new U18MenCategory());
         categoryMap.put(categoryCount++, new U18WomenCategory());
+    }
+
+    @PostConstruct
+    private void initRaceService() {
+        // Use the following to print results when finished:
+//        printResults();
+//        printDNF();
     }
 
     public Race getRace() {
@@ -250,8 +258,8 @@ public class RaceService {
     public void printDNF() {
         try {
             List<Runner> runners = raceRepository.getRunnersWithNoResult();
-            String fileNameTxt = "/Users/rasmus/results/UdenResultat.txt";
-            String fileNameCsv = "/Users/rasmus/results/UdenResultat.csv";
+            String fileNameTxt = "/Users/rasmus/results/2017/UdenResultat.txt";
+            String fileNameCsv = "/Users/rasmus/results/2017/UdenResultat.csv";
             File txtFile = new File(fileNameTxt);
             File csvFile = new File(fileNameCsv);
             FileOutputStream fosTxt = new FileOutputStream(txtFile);
@@ -276,8 +284,8 @@ public class RaceService {
     }
 
     private static void writeResultFiles(ResultCategory category, List<Runner> runners) throws IOException {
-        String fileNameTxt = "/Users/rasmus/results/" + category.getCategoryId() + ".txt";
-        String fileNameCsv = "/Users/rasmus/results/" + category.getCategoryId() + ".csv";
+        String fileNameTxt = "/Users/rasmus/results/2017/" + category.getCategoryId() + ".txt";
+        String fileNameCsv = "/Users/rasmus/results/2017/" + category.getCategoryId() + ".csv";
         File txtFile = new File(fileNameTxt);
         File csvFile = new File(fileNameCsv);
         FileOutputStream fosTxt = new FileOutputStream(txtFile);

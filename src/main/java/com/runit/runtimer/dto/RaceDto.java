@@ -7,7 +7,7 @@ public class RaceDto {
     public boolean isFinished;
 
     public RaceDto(Race race) {
-        this.startTime = race.getStartTime().getTime();
+        this.startTime = race.getStartTime() != null ? race.getStartTime().getTime() : 0;
         this.isFinished = race.isFinished();
     }
 }
